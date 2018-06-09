@@ -1,0 +1,34 @@
+@titleH: 40px;
+@topToolbarH: 64px;
+
+.mat-toolbar-hF(@H) {
+  min-height: @H;
+  height: @H;
+  line-height: @H;
+
+  & > div.mat-toolbar-layout {
+    min-height: @H;
+    height: @H;
+
+    & > mat-toolbar-row {
+      min-height: @H;
+      height: @H;
+    }
+  }
+}
+
+.mat-tab-group-hF(@H) {
+  .mat-tab-label {
+    height: @H;
+    min-height: @H;
+    line-height: @H;
+  }
+}
+
+.japp-page-F(@D) {
+  display: flex;
+  box-sizing: border-box;
+  flex-flow: @D;
+  flex: 1;
+  overflow: hidden;
+}

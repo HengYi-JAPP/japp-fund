@@ -1,0 +1,29 @@
+<form>
+  <mat-form-field floatPlaceholder="never">
+    <input matInput [formControl]="searchQCtrl" [placeholder]="'TOOLTIP.CORPORATION-SUGGEST-SEARCH'|translate">
+  </mat-form-field>
+</form>
+
+<mat-table [dataSource]="corporationSuggestDataSource" fxFlex style="overflow-y: auto">
+  <ng-container cdkColumnDef="code">
+    <mat-header-cell *cdkHeaderCellDef>{{'CODE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.code}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button mat-button color="primary" (click)="create(row)">
+        {{'COMMON.IMPORT'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="corporationSuggestColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: corporationSuggestColumns;"></mat-row>
+</mat-table>

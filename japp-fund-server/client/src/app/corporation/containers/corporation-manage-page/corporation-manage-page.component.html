@@ -1,0 +1,50 @@
+<button class="my-add" mat-mini-fab routerLink="/corporations/import">
+  <mat-icon>add</mat-icon>
+</button>
+
+<form>
+  <mat-form-field floatPlaceholder="never">
+    <input matInput [formControl]="filterNameQCtrl" [placeholder]="'TOOLTIP.CORPORATION-FILTER-NAMEQ'|translate">
+  </mat-form-field>
+</form>
+
+<mat-table [dataSource]="corporationDataSource" fxFlex style="overflow-y: auto">
+
+  <ng-container cdkColumnDef="id">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="250px">{{'ID'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let element" fxFlex="250px"> {{element.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="code">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="100px">{{'CODE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row" fxFlex="100px"> {{row.code}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="sortBy">
+    <mat-header-cell *cdkHeaderCellDef fxFlex="100px">{{'COMMON.SORTBY'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row" fxFlex="100px"> {{row.sortBy}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <!--<a mat-button color="primary" routerLink="/corporations/balance" [queryParams]="{id:row.id}">-->
+        <!--{{'COMMON.BALANCE'|translate}}-->
+      <!--</a>-->
+      <a mat-button color="primary" routerLink="/corporations/edit" [queryParams]="{id:row.id}">
+        {{'COMMON.EDIT'|translate}}
+      </a>
+      <button (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="corporationColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: corporationColumns;"></mat-row>
+</mat-table>

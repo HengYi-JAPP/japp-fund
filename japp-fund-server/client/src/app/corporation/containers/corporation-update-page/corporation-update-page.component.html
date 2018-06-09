@@ -1,0 +1,27 @@
+<form [formGroup]="form" (ngSubmit)="submit()" fxLayout="column" fxFlex style="overflow-y: auto">
+  <mat-form-field>
+    <input matInput [formControl]="code" required placeholder="CODE">
+    <mat-error *ngIf="code.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [formControl]="name" required [placeholder]="'COMMON.NAME'|translate">
+    <mat-error *ngIf="name.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [formControl]="sortBy" required [placeholder]="'COMMON.SORTBY'|translate">
+    <mat-error *ngIf="sortBy.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <span fxFlex></span>
+  <button type="submit" color="primary" mat-raised-button [disabled]="form.pristine||form.invalid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>

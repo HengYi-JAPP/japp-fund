@@ -1,0 +1,54 @@
+SS:
+  displayName: 上市合计
+
+SS_XS:
+  parent: SS
+  displayName: 上市合并-萧山管控小计
+  corporationIds:
+    - XyfF1HAhA5Wy5Wwhunu6vW #恒逸石化股份有限公司
+    - L4jWnLywCoTXbaLbsZvDPU #浙江恒逸石化销售有限公司
+    - W9BsjgawnMqNBr7WyUMT8U #浙江恒逸石化有限公司
+    - X9vq1gG3ZYm4a7dqxQv7bZ #浙江恒逸高新材料有限公司
+    - WiBoyLW1N3EFq6on5z2SUU #浙江恒逸聚合物有限公司
+    - GNR6w5dvhH4nsrTfD2HoCo #福建逸锦化纤有限公司
+    - H3en9yxiAbKigdp3ZFwPCR #宿迁逸达新材料有限公司
+    - QWjoPaXhJV39d2rVZczJN9 #海宁恒逸新材料有限公司
+    - RUg5gYRPdT99CbEFKWAs4Y #海宁恒逸热电有限公司
+    - XU58yKgkc7sv92z2qiEjc1 #浙江恒逸工程管理有限公司
+    - B6vpFfwJGp2W2UcarNV4VR #宁波恒逸实业有限公司
+    - 3SnrEFSUo9UztujFkeMvB3 #浙江恒逸国际贸易有限公司
+    - 9bkmrQ2QNvohMrp4ptySJW #浙江恒凯能源有限公司
+    - DtdLxrWpEYFpW83dDePR9S #香港天逸国际控股有限公司
+    - G4dhqNkVeRZYd9r1dKpJWQ #佳栢国际投资有限公司
+
+SS_NB:
+  parent: SS
+  displayName: 上市合并-宁波管控小计
+  corporationIds:
+    - T7UZNYMYa12WbwnoYqG2oU #浙江逸昕化纤有限公司
+    - 8zKns1KnQz7k7GRdstDXEZ #宁波恒逸贸易有限公司
+    - 2CGV6GTMMMULuDLhMkiPtT #浙江逸盛石化有限公司
+    - LjeEwYnzNaxTp4saQtQbDJ #香港逸盛石化投资有限公司
+
+FSS:
+  displayName: 非上市合计
+
+FSS_JTKG:
+  parent: FSS
+  displayName: 非上市-集团控股小计
+  corporationIds:
+    - MtYbeCZBmJWzC6hY9tiGn1 #浙江恒逸集团有限公司
+    - J3nBK9QSAsHwbjcMKzxQjE #杭州恒逸投资有限公司
+    - LBZ3JKssL1k7hgTNjeNrbY #浙江恒逸锦纶有限公司
+    - TJhBk1Pua44b6UsABGHwFR #杭州逸宸化纤有限公司
+    - CdduuBWdoG8VhvJuFXHFop #宁波恒逸物流有限公司
+    - Fy5qA4jhQMonQUQDkZAbUZ #浙江恒逸物流有限公司
+    - 2QD6KF53p2vUG5MTqTH7XL #香港逸天有限公司
+    - 5a1NHP7MYpXH7oASXpvmsu #嘉兴逸鹏化纤有限公司
+    - Ua1kNgPWaabJnrc3HzDvgH #太仓逸枫化纤有限公司
+
+FSS_JTCG:
+  parent: FSS
+  displayName: 非上市-集团参股小计
+  corporationIds:
+    - AXiFrvGAMWpxXfiQkSnyBK #杭州逸暻化纤有限公司

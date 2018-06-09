@@ -1,0 +1,44 @@
+<button class="my-add" mat-mini-fab routerLink="/operators/import">
+  <mat-icon>add</mat-icon>
+</button>
+
+<form>
+  <mat-form-field floatPlaceholder="never">
+    <input matInput [formControl]="filterNameQCtrl" [placeholder]="'TOOLTIP.OPERATOR-FILTER-NAMEQ'|translate">
+  </mat-form-field>
+</form>
+
+<mat-table fxFlex style="overflow-y: auto" [dataSource]="operatorDataSource">
+
+  <ng-container cdkColumnDef="id">
+    <mat-header-cell *cdkHeaderCellDef>{{'ID'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{row.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">{{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="admin">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ADMIN'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      {{('COMMON.'+(row.admin?'YES':'NO'))|translate}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button mat-button color="primary" routerLink="/operators/edit" [queryParams]="{id:row.id}">
+        {{'COMMON.EDIT'|translate}}
+      </button>
+      <button (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="operatorColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: operatorColumns;"></mat-row>
+</mat-table>

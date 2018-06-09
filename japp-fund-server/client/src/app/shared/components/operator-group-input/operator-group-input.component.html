@@ -1,0 +1,25 @@
+<mat-toolbar class="h40">
+  <button type="button" (click)="update()" mat-button color="primary">
+    {{'BUTTON.ADD-OPERATORGROUP'|translate}}
+  </button>
+</mat-toolbar>
+
+<mat-table [dataSource]="operatorGroupDataSource">
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button type="button" (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="operatorGroupColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: operatorGroupColumns;"></mat-row>
+</mat-table>

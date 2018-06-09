@@ -1,0 +1,16 @@
+<mat-toolbar class="title">
+  <div fxFlex>
+    {{'NAV.OPERATORGROUPS'|translate}}
+  </div>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-nav-list fxFlex style="overflow-y: auto">
+  <mat-list-item *ngFor="let it of (operatorGroups$|async)" (click)="add(it)">
+    <h3 matLine>
+      {{it.name}}
+    </h3>
+  </mat-list-item>
+</mat-nav-list>

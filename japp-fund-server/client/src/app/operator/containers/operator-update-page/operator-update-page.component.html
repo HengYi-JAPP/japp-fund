@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="submit()" fxLayout="column" fxFlex style="overflow-y: auto">
+  <mat-form-field>
+    <input matInput [formControl]="name" required [placeholder]="'COMMON.NAME'|translate">
+    <mat-error *ngIf="name.hasError('required')">
+      <span translate>VALIDATORS.REQUIRED</span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-checkbox [formControl]="admin" class="mat-form-field-wrapper">{{'COMMON.ADMIN'|translate}}</mat-checkbox>
+
+  <mat-form-field>
+    <mat-select [formControl]="operatorGroups" [multiple]="true" [compareWith]="compareWithId" [placeholder]="'NAV.OPERATORGROUPS'|translate">
+      <mat-option [value]="operatorGroup" *ngFor="let operatorGroup of (operatorGroups$|async)">
+        {{operatorGroup.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <jfundsvr-permission-input [formControl]="permissions"></jfundsvr-permission-input>
+
+  <span fxFlex></span>
+  <button type="submit" color="primary" mat-raised-button [disabled]="form.pristine||form.invalid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</form>

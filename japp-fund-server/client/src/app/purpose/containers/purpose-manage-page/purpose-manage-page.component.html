@@ -1,0 +1,36 @@
+<button class="my-add" mat-mini-fab routerLink="/purposes/edit">
+  <mat-icon>add</mat-icon>
+</button>
+
+<mat-table fxFlex style="overflow-y: auto" [dataSource]="purposeDataSource">
+
+  <ng-container cdkColumnDef="id">
+    <mat-header-cell *cdkHeaderCellDef>{{'ID'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.id}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="sortBy">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.SORTBY'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.sortBy}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <a mat-button color="primary" routerLink="/purposes/edit" [queryParams]="{id:row.id}">
+        {{'COMMON.EDIT'|translate}}
+      </a>
+      <button (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="purposeColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: purposeColumns;"></mat-row>
+</mat-table>

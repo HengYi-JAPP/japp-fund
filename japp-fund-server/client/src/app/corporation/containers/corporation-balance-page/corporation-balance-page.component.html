@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+  {{'NAV.CORPORATION-BALANCE'|translate}}-{{(corporation$|async)?.name}}
+</mat-toolbar>
+
+<mat-form-field floatPlaceholder="never">
+  <input matInput [ngModel]="date$|async" [matDatepicker]="picker" [placeholder]="'COMMON.DATE'|translate">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<mat-tab-group (selectChange)="tabChange($event)">
+  <mat-tab [label]="currency.name"
+           *ngFor="let currency of currencies$|async"></mat-tab>
+</mat-tab-group>
+
+<mat-table fxFlex style="overflow-y: auto" [dataSource]="corporationBalanceDataSource">
+
+  <ng-container cdkColumnDef="date">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.DATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.date|date:'y-MM-dd'}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="money">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.BALANCE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.balance|currency:(currencyCode$|async):true}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="corporationBalanceColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: corporationBalanceColumns;"></mat-row>
+</mat-table>

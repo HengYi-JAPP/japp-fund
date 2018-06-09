@@ -1,0 +1,124 @@
+{
+  "TITLE": "资金计划-后台",
+  "NAV": {
+    "CORPORATION-BALANCE": "余额",
+    "CORPORATION-IMPORT": "导入公司",
+    "CORPORATION-UPDATE": "修改公司",
+    "CORPORATIONS": "公司",
+    "CURRENCY-IMPORT": "导入币种",
+    "CURRENCY-UPDATE": "修改币种",
+    "CURRENCIES": "币种",
+    "PURPOSE-CREATE": "新建项目",
+    "PURPOSE-UPDATE": "修改项目",
+    "PURPOSES": "项目",
+    "OPERATOR-IMPORT": "导入人员",
+    "OPERATOR-UPDATE": "权限修改",
+    "OPERATORS": "人员",
+    "OPERATORGROUP-CREATE": "新建用户组",
+    "OPERATORGROUP-UPDATE": "修改用户组",
+    "OPERATORGROUPS": "用户组"
+  },
+  "BUTTON": {
+    "ADD-PERMISSION": "添加权限",
+    "ADD-OPERATORGROUP": "添加用户组",
+    "IMPORT": "导入"
+  },
+  "TOOLTIP": {
+    "CORPORATION-FILTER-NAMEQ": "CODE或名称搜索",
+    "CORPORATION-SUGGEST-SEARCH": "CODE或名称搜索",
+    "OPERATOR-FILTER-NAMEQ": "名称搜索",
+    "OPERATOR-SUGGEST-SEARCH": "OA_ID或HR_ID或名称搜索"
+  },
+  "VALIDATORS": {
+    "REQUIRED": "必输项",
+    "MIN": "最小值：{{min}}",
+    "MAX": "最大值：{{max}}",
+    "MIN-LENGTH": "至少{{requiredLength}}个字符；当前{{actualLength}}个字符",
+    "MAX-LENGTH": "最大值为 {{MAXLENGTH}}"
+  },
+  "TOAST": {
+    "SUCCESS": "操作成功"
+  },
+  "PAGINATOR": {
+    "ITEMSPERPAGELABEL": "每页数量"
+  },
+  "PERMISSION": {
+    "CORPORATION": "公司权限",
+    "CURRENCY": "币种权限",
+    "ROLETYPE": "角色权限",
+    "ROLETYPE-MONTH_PLAN_UPDATE": "月计划维护",
+    "ROLETYPE-DAY_PLAN_UPDATE": "日计划维护",
+    "ROLETYPE-FUND_UPDATE": "日执行维护",
+    "ROLETYPE-FUND_EAD": "查看",
+    "ITEM": "权限行项目"
+  },
+  "BASEDATAMAINTAIN": "基础数据维护",
+  "COMMON": {
+    "TITLE": "标题",
+    "BALANCE": "余额",
+    "HELP": "帮助",
+    "ADMIN": "管理员",
+    "NOTE": "备注",
+    "AUDIT": "审核",
+    "FIELD": "字段",
+    "LOG": "日志",
+    "TYPE": "类型",
+    "DOWNLOAD": "下载",
+    "IMPORT": "导入",
+    "TO_TOP": "置顶",
+    "SETTING": "设置",
+    "SORTBY": "排序",
+    "FILTERBY": "筛选",
+    "DEFAULT": "默认",
+    "SELECT": "选择",
+    "READ": "阅读",
+    "MY": "我的",
+    "YES": "是",
+    "NO": "否",
+    "ALL": "全部",
+    "COMMENT": "评论",
+    "LOGOUT": "退出",
+    "LOGIN": "登入",
+    "LOGINID": "登入名",
+    "PASSWORD": "密码",
+    "MENU": "菜单",
+    "NAME": "名称",
+    "SEARCH": "搜索",
+    "CANCEL": "取消",
+    "DATE": "日期",
+    "START_DATE": "开始时间",
+    "DELETE_CONFIRM": "删除确认？",
+    "FINISH_CONFIRM": "完成确认？",
+    "CONFIRM": "确认",
+    "MOVE_DOWN": "下移",
+    "MOVE_UP": "上移",
+    "TAG": "标签",
+    "NEW": "新建",
+    "EDIT": "修改",
+    "SAVE": "保存",
+    "DELETE": "删除",
+    "FINISH": "完成",
+    "CONTENT": "内容",
+    "ATTACHMENT": "附件",
+    "OPERATE": "操作",
+    "OPERATE_MORE": "更多操作",
+    "UPLOAD": "上传附件"
+  },
+  "EDITOR": {
+    "LIST-BULLET": "项目符号",
+    "LIST-ORDERED": "编号列表",
+    "LINK": "插入链接",
+    "IMAGE": "插入图片",
+    "HEADER": "格式",
+    "FONT": "字体",
+    "ALIGN": "对齐",
+    "BOLD": "粗体",
+    "ITALIC": "斜体"
+  },
+  "VALID": {
+    "REQUIRED": "必输"
+  },
+  "ERROR_CODE": {
+    "E00002": "请输入内容！"
+  }
+}

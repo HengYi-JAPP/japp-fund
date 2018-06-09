@@ -1,0 +1,129 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css/normalize.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "library";
+
+body {
+  font-family: 'microsoft yahei', Roboto, Noto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-flow: column;
+  box-sizing: border-box;
+  flex: 1;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-size: 14px;
+
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
+}
+
+.mat-sidenav-content.mat-drawer-content {
+  display: flex !important;
+  flex-flow: column !important;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.jfundsvr-dialog-comp-row,
+.jfundsvr-page-row {
+  .japp-page-F(row);
+}
+
+.jfundsvr-dialog-comp,
+.jfundsvr-page {
+  .japp-page-F(column);
+}
+
+.my-add {
+  position: fixed !important;
+  top: 68px;
+  right: 16px;
+  @media (max-width: 600px) {
+    top: 36px;
+  }
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cdk-overlay-pane.my-dialog {
+  .mat-dialog-container {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    overflow: hidden;
+    //width: 600px;
+    height: 800px;
+    max-width: 100vw;
+    max-height: 100vh;
+    min-width: 320px;
+    min-height: 480px;
+    padding: 0;
+    @media (max-width: 600px) {
+      height: 100vh;
+      width: 80vw;
+      min-width: 80vw;
+      min-height: 100vh;
+    }
+
+    .mat-toolbar {
+      .dialog-title {
+        color: #44a8d5;
+      }
+      button.close {
+        width: 24px;
+        height: 24px;
+        .mat-icon.material-icons {
+          margin-bottom: 24px;
+        }
+        .mat-button-wrapper {
+          padding: 0;
+        }
+      }
+    }
+  }
+
+  .mat-dialog-actions {
+    flex-shrink: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.mat-toolbar.title {
+  .mat-toolbar-hF(@titleH);
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  color: black;
+  font-size: 16px;
+}
+
+.mat-toolbar.h40 {
+  .mat-toolbar-hF(40px);
+}
+
+.mat-tab-group.h40 {
+  .mat-tab-group-hF(40px);
+  .mat-tab-label {
+    min-width: 130px;
+  }
+  .mat-ink-bar {
+    background-color: rgb(255, 64, 129);
+  }
+}
+
+.mat-tab-nav-bar.h40 {
+  .mat-ink-bar {
+    background-color: rgb(255, 64, 129);
+  }
+}
+
+[hidden] {
+  display: none !important;
+}

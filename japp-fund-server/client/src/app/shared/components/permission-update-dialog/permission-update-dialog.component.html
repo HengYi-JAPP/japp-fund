@@ -1,0 +1,54 @@
+<mat-toolbar class="title">
+  <span fxFlex>  </span>
+  <button class="close" mat-mini-fab matDialogClose>
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="form" fxFlex fxLayout>
+  <mat-selection-list #corporationSelectionList [formControl]="corporationIds" dense fxFlex="33">
+    <h3 matSubheader>
+      <mat-checkbox [formControl]="allCorporation">
+        {{'COMMON.ALL'|translate}}
+      </mat-checkbox>
+      <mat-error *ngIf="!form.pristine && corporationIds.hasError('required')">
+        {{'VALID.REQUIRED'|translate}}
+      </mat-error>
+    </h3>
+    <mat-list-option [value]="corporation.id" *ngFor="let corporation of (corporations$|async)" checkboxPosition="before">
+      {{corporation.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-selection-list #currencySelectionList [formControl]="currencyIds" dense fxFlex="33">
+    <h3 matSubheader>
+      <mat-checkbox [formControl]="allCurrency">
+        {{'COMMON.ALL'|translate}}
+      </mat-checkbox>
+      <mat-error *ngIf="!form.pristine && currencyIds.hasError('required')">
+        {{'VALID.REQUIRED'|translate}}
+      </mat-error>
+    </h3>
+    <mat-list-option [value]="currency.id" *ngFor="let currency of (currencies$|async)" checkboxPosition="before">
+      {{currency.name}}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <mat-selection-list [formControl]="roleTypes" dense fxFlex="33">
+    <h3 matSubheader *ngIf="roleTypes.errors">
+      <mat-error *ngIf="roleTypes.hasError('required')">
+        {{'VALID.REQUIRED'|translate}}
+      </mat-error>
+    </h3>
+    <mat-list-option [value]="roleType" *ngFor="let roleType of (roleTypes$|async)" checkboxPosition="before">
+      {{('PERMISSION.ROLETYPE-' + roleType)|translate}}
+    </mat-list-option>
+  </mat-selection-list>
+</form>
+
+<mat-dialog-actions>
+  <span fxFlex></span>
+  <button type="button" color="primary" mat-button (click)="close()" [disabled]="form.pristine||form.invalid">
+    {{'COMMON.FINISH'|translate}}
+  </button>
+</mat-dialog-actions>

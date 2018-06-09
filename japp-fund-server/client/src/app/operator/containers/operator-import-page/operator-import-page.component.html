@@ -1,0 +1,33 @@
+<mat-form-field floatPlaceholder="never">
+  <input matInput [formControl]="searchQCtrl" [placeholder]="'TOOLTIP.OPERATOR-SUGGEST-SEARCH'|translate">
+</mat-form-field>
+
+<mat-table fxFlex style="overflow-y: auto" [dataSource]="operatorSuggestDataSource">
+
+  <ng-container cdkColumnDef="oaId">
+    <mat-header-cell *cdkHeaderCellDef>{{'OA_ID'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.oaId}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="hrId">
+    <mat-header-cell *cdkHeaderCellDef>{{'HR_ID'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.hrId}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="name">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.NAME'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button mat-button color="primary" (click)="create(row)">
+        {{'COMMON.IMPORT'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="operatorSuggestColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: operatorSuggestColumns;"></mat-row>
+</mat-table>

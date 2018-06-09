@@ -1,0 +1,38 @@
+<mat-toolbar class="h40">
+  <button type="button" (click)="update()" mat-button color="primary">
+    {{'BUTTON.ADD-PERMISSION'|translate}}
+  </button>
+</mat-toolbar>
+
+<mat-table [dataSource]="permissionDataSource">
+
+  <ng-container cdkColumnDef="corporations">
+    <mat-header-cell *cdkHeaderCellDef>{{'PERMISSION.CORPORATION'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row|permissionCorporationName|async}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="currencies">
+    <mat-header-cell *cdkHeaderCellDef>{{'PERMISSION.CURRENCY'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row|permissionCurrencyName|async}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="roleTypes">
+    <mat-header-cell *cdkHeaderCellDef>{{'PERMISSION.ROLETYPE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row"> {{row|permissionRoleTypeName|async}}</mat-cell>
+  </ng-container>
+
+  <ng-container cdkColumnDef="btns">
+    <mat-header-cell *cdkHeaderCellDef>{{'COMMON.OPERATE'|translate}}</mat-header-cell>
+    <mat-cell *cdkCellDef="let row">
+      <button type="button" mat-button color="primary" (click)="update(row)">
+        {{'COMMON.EDIT'|translate}}
+      </button>
+      <button type="button" (click)="delete(row)" mat-button color="warn">
+        {{'COMMON.DELETE'|translate}}
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *cdkHeaderRowDef="permissionColumns"></mat-header-row>
+  <mat-row *cdkRowDef="let row; columns: permissionColumns;"></mat-row>
+</mat-table>
