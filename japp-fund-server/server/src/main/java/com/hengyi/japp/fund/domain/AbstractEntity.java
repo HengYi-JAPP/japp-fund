@@ -6,8 +6,9 @@
 package com.hengyi.japp.fund.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.ixtf.japp.codec.Jcodec;
+import com.github.ixtf.japp.core.J;
 import com.google.common.base.MoreObjects;
-import org.jzb.J;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -36,7 +37,7 @@ public abstract class AbstractEntity implements Serializable {
     @PrePersist
     public void uuid() {
         if (J.isBlank(id)) {
-            setId(J.uuid58());
+            setId(Jcodec.uuid58());
         }
     }
 
@@ -64,10 +65,16 @@ public abstract class AbstractEntity implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AbstractEntity that = (AbstractEntity) o;
-        if (id == null || that.id == null) return false;
+        if (id == null || that.id == null) {
+            return false;
+        }
         return Objects.equals(id, that.id);
     }
 

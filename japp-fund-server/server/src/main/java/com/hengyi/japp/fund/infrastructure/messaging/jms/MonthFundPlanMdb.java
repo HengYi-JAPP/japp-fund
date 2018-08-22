@@ -31,8 +31,9 @@ public class MonthFundPlanMdb implements MessageListener {
         try {
             MapMessage msg = (MapMessage) inMessage;
             String entityClass = msg.getString("entityClass");
-            if (!Objects.equals(entityClass, MonthFundPlan.class.getName()))
+            if (!Objects.equals(entityClass, MonthFundPlan.class.getName())) {
                 return;
+            }
 
             eventService.save(MonthFundPlanEvent.class, msg);
         } catch (Throwable e) {

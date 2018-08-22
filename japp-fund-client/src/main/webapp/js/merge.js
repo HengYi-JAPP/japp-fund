@@ -2,6 +2,11 @@ var MergePage = /** @class */ (function () {
     function MergePage(currencyId, date, divideDate) {
         var _this = this;
         this.$table = $('#page-table').loading();
+        this.currencies = [
+            { id: 'g111W2qibFUfXSub6MEEJ', name: '恒逸汇总（人民币）' },
+            { id: 'g1zTboj6D3ddaXJrvm5AF', name: '恒逸汇总（美元）' },
+            { id: 'SSmTiaVKUe6xy37VZmacWj', name: '恒逸汇总（承兑汇票）' },
+        ];
         this.$pageForm = $('#pageForm').on('submit', function () {
             var params = _this.formParams();
             _this.$pageForm.find('input[name="currencyId"]').val(params.currencyId);
@@ -11,11 +16,6 @@ var MergePage = /** @class */ (function () {
             _this.$pageForm.find('input[name="divideMonth"]').val(params.divideMonth);
             _this.$pageForm.find('input[name="divideDay"]').val(params.divideDay);
         });
-        this.currencies = [
-            { id: 'g111W2qibFUfXSub6MEEJ', name: '恒逸汇总（人民币）' },
-            { id: 'g1zTboj6D3ddaXJrvm5AF', name: '恒逸汇总（美元）' },
-            { id: 'SSmTiaVKUe6xy37VZmacWj', name: '恒逸汇总（承兑汇票）' },
-        ];
         this.date = moment(date);
         this.divideDate = moment(divideDate);
         this.weekDatas = J.generateMonthWeeks(this.date).map(function (dates, index) { return new MergeWeekData(_this, dates, index + 1); });
@@ -77,16 +77,6 @@ var MergePage = /** @class */ (function () {
             _this.$table.loading('toggle');
         });
     }
-    MergePage.prototype.formParams = function () {
-        return {
-            currencyId: this.currency && this.currency.id,
-            year: this.date.year(),
-            month: this.date.month() + 1,
-            divideYear: this.divideDate.year(),
-            divideMonth: this.divideDate.month() + 1,
-            divideDay: this.divideDate.date(),
-        };
-    };
     MergePage.prototype.monthAdd = function (i) {
         if (i === void 0) { i = 1; }
         this.date = moment(this.date).add(i, 'M');
@@ -105,6 +95,16 @@ var MergePage = /** @class */ (function () {
         var params = this.formParams();
         delete params.currencyId;
         J.exportSumReportsXlsx(params);
+    };
+    MergePage.prototype.formParams = function () {
+        return {
+            currencyId: this.currency && this.currency.id,
+            year: this.date.year(),
+            month: this.date.month() + 1,
+            divideYear: this.divideDate.year(),
+            divideMonth: this.divideDate.month() + 1,
+            divideDay: this.divideDate.date(),
+        };
     };
     return MergePage;
 }());

@@ -1,8 +1,10 @@
 package com.hengyi.japp.fund.application.command;
 
 import com.hengyi.japp.fund.application.dto.EntityDTO;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -10,25 +12,11 @@ import java.math.BigDecimal;
  *
  * @author jzb 2018-01-24
  */
-public class InitCdhpCommand {
+@Data
+public class InitCdhpCommand implements Serializable {
     @NotNull
     private EntityDTO corporation;
     @NotNull
     private BigDecimal balance;
 
-    public EntityDTO getCorporation() {
-        return corporation;
-    }
-
-    public void setCorporation(EntityDTO corporation) {
-        this.corporation = corporation;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
 }

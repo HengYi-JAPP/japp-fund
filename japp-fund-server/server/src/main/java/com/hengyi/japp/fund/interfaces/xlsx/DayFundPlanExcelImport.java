@@ -1,5 +1,7 @@
 package com.hengyi.japp.fund.interfaces.xlsx;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.ee.Jee;
 import com.hengyi.japp.fund.application.FundlikeService;
 import com.hengyi.japp.fund.domain.DayFundPlan;
 import org.apache.commons.io.FilenameUtils;
@@ -7,8 +9,6 @@ import org.apache.commons.lang3.Validate;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.jzb.J;
-import org.jzb.ee.JEE;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +24,7 @@ public abstract class DayFundPlanExcelImport implements Callable<Collection<DayF
     protected final File file;
 
     protected DayFundPlanExcelImport(File file) {
-        this.fundlikeService = JEE.getBean(FundlikeService.class);
+        this.fundlikeService = Jee.getBean(FundlikeService.class);
         this.file = file;
     }
 

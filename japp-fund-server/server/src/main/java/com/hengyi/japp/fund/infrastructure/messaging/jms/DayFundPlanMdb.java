@@ -31,8 +31,9 @@ public class DayFundPlanMdb implements MessageListener {
         try {
             MapMessage msg = (MapMessage) inMessage;
             String entityClass = msg.getString("entityClass");
-            if (!Objects.equals(entityClass, DayFundPlan.class.getName()))
+            if (!Objects.equals(entityClass, DayFundPlan.class.getName())) {
                 return;
+            }
 
             eventService.save(DayFundPlanEvent.class, msg);
         } catch (Throwable e) {

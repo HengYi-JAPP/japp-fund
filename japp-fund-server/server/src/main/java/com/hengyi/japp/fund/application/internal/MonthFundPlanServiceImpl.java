@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.ApplicationEvents;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.MonthFundPlanService;
@@ -8,7 +9,6 @@ import com.hengyi.japp.fund.domain.*;
 import com.hengyi.japp.fund.domain.event.EventType;
 import com.hengyi.japp.fund.domain.permission.RoleType;
 import com.hengyi.japp.fund.domain.repository.*;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

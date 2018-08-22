@@ -1,12 +1,12 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.fund.domain.Operator;
 import com.hengyi.japp.fund.domain.permission.OperatorGroup;
 import com.hengyi.japp.fund.domain.permission.OperatorPermission;
 import com.hengyi.japp.fund.domain.permission.Permission;
 import com.hengyi.japp.fund.domain.repository.OperatorPermissionRepository;
-import org.jzb.J;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
@@ -24,8 +24,9 @@ public class JpaOperatorPermissionRepository extends JpaCURDRepository<OperatorP
         if (operatorPermission.isNew()) {
             operatorPermission.setId(operator.getId());
         }
-        if (Objects.equals(operator.getId(), operatorPermission.getId()))
+        if (Objects.equals(operator.getId(), operatorPermission.getId())) {
             return em.merge(operatorPermission);
+        }
         throw new IllegalAccessError();
     }
 

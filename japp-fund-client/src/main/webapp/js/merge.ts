@@ -4,15 +4,6 @@ declare var J: any;
 
 class MergePage {
     readonly $table = $('#page-table').loading();
-    private readonly $pageForm = $('#pageForm').on('submit', () => {
-        const params = this.formParams();
-        this.$pageForm.find('input[name="currencyId"]').val(params.currencyId);
-        this.$pageForm.find('input[name="year"]').val(params.year);
-        this.$pageForm.find('input[name="month"]').val(params.month);
-        this.$pageForm.find('input[name="divideYear"]').val(params.divideYear);
-        this.$pageForm.find('input[name="divideMonth"]').val(params.divideMonth);
-        this.$pageForm.find('input[name="divideDay"]').val(params.divideDay);
-    });
     corporationMap: { [id: string]: any };
     readonly currencies = [
         {id: 'g111W2qibFUfXSub6MEEJ', name: '恒逸汇总（人民币）'},
@@ -23,8 +14,17 @@ class MergePage {
     date: any;
     divideDate: any;
     balances: any[];
-    private readonly weekDatas: MergeWeekData[];
     sumTypes: any[];
+    private readonly $pageForm = $('#pageForm').on('submit', () => {
+        const params = this.formParams();
+        this.$pageForm.find('input[name="currencyId"]').val(params.currencyId);
+        this.$pageForm.find('input[name="year"]').val(params.year);
+        this.$pageForm.find('input[name="month"]').val(params.month);
+        this.$pageForm.find('input[name="divideYear"]').val(params.divideYear);
+        this.$pageForm.find('input[name="divideMonth"]').val(params.divideMonth);
+        this.$pageForm.find('input[name="divideDay"]').val(params.divideDay);
+    });
+    private readonly weekDatas: MergeWeekData[];
 
     constructor(currencyId: string, date: string, divideDate: string) {
         this.date = moment(date);
@@ -92,17 +92,6 @@ class MergePage {
         });
     }
 
-    private formParams(): any {
-        return {
-            currencyId: this.currency && this.currency.id,
-            year: this.date.year(),
-            month: this.date.month() + 1,
-            divideYear: this.divideDate.year(),
-            divideMonth: this.divideDate.month() + 1,
-            divideDay: this.divideDate.date(),
-        }
-    }
-
     monthAdd(i = 1) {
         this.date = moment(this.date).add(i, 'M');
         this.divideDate = moment();
@@ -124,14 +113,25 @@ class MergePage {
         delete params.currencyId;
         J.exportSumReportsXlsx(params);
     }
+
+    private formParams(): any {
+        return {
+            currencyId: this.currency && this.currency.id,
+            year: this.date.year(),
+            month: this.date.month() + 1,
+            divideYear: this.divideDate.year(),
+            divideMonth: this.divideDate.month() + 1,
+            divideDay: this.divideDate.date(),
+        }
+    }
 }
 
 class MergeWeekData {
     //快速导航到周
     readonly domId: string;
-    private dayDatas: MergeDayData[];
     //双击小计，隐藏公司项
     readonly corporationTrsMap = {};
+    private dayDatas: MergeDayData[];
 
     constructor(private readonly page: MergePage, private readonly dates: any[], private readonly index: number) {
         this.domId = 'week-' + index;

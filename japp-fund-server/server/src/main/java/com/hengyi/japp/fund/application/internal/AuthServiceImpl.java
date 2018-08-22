@@ -1,5 +1,7 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.core.exception.JAuthorizationException;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.HashMultimap;
@@ -14,8 +16,6 @@ import com.hengyi.japp.fund.domain.Operator;
 import com.hengyi.japp.fund.domain.permission.Permission;
 import com.hengyi.japp.fund.domain.permission.RoleType;
 import com.hengyi.japp.fund.domain.repository.*;
-import org.jzb.J;
-import org.jzb.exception.JNonAuthorizationError;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -101,39 +101,45 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String jwtToken(String appId, String appSecret, String casPrincipal, String oaId) {
+    public String jwtToken(String appId, String appSecret, String casPrincipal, String oaId) throws JAuthorizationException {
         AppClient appClient = appClientRepository.findByAppIdAndAppSecret(appId, appSecret);
-        if (appClient == null)
-            throw new JNonAuthorizationError();
+        if (appClient == null) {
+            throw new JAuthorizationException();
+        }
         Operator operator = operatorRepository.findByCas(casPrincipal, oaId);
-        if (operator == null)
-            throw new JNonAuthorizationError();
+        if (operator == null) {
+            throw new JAuthorizationException();
+        }
         return Util.jwtToken(operator);
     }
 
     private boolean isAdmin(Principal principal) {
-        if ("admin".equals(principal.getName()))
+        if ("admin".equals(principal.getName())) {
             return true;
+        }
         Operator operator = operatorRepository.findBy(principal);
         return operator.isAdmin();
     }
 
     @Override
-    public void checkAdmin(Principal principal) {
+    public void checkAdmin(Principal principal) throws JAuthorizationException {
         Operator operator = operatorRepository.find(principal.getName());
-        if (!operator.isAdmin())
-            throw new JNonAuthorizationError();
+        if (!operator.isAdmin()) {
+            throw new JAuthorizationException();
+        }
     }
 
     @Override
     public void checkPermission(Principal principal, Corporation corporation, Currency currency, RoleType roleType) throws Exception {
-        if (isAdmin(principal))
+        if (isAdmin(principal)) {
             return;
+        }
         Multimap<Corporation, Currency> multimap = getPermissions(principal);
         Collection<Currency> currencies = multimap.get(corporation);
-        if (J.nonEmpty(currencies) && currencies.contains(currency))
+        if (J.nonEmpty(currencies) && currencies.contains(currency)) {
             return;
-        throw new JNonAuthorizationError();
+        }
+        throw new JAuthorizationException();
     }
 
     @Override

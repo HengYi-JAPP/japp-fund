@@ -1,11 +1,11 @@
 package com.hengyi.japp.fund.interfaces.xlsx;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.hengyi.japp.fund.domain.DayFundPlan;
 import com.hengyi.japp.fund.domain.MonthFundPlan;
 import org.apache.poi.ss.usermodel.*;
-import org.jzb.J;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -99,8 +99,9 @@ public class DefaultDayFundPlanExcelImport extends DayFundPlanExcelImport {
             nextRow = sheet.getRow(row.getRowNum() + 1);
 
             String filterText = PURE_TEXT_FUN.apply(row.getCell(1));
-            if (FILTER_TEXT_SET.contains(filterText))
+            if (FILTER_TEXT_SET.contains(filterText)) {
                 continue;
+            }
 
             Cell moneyCell = row.getCell(columnIndex);
             Cell noteCell = row.getCell(columnIndex + 1);

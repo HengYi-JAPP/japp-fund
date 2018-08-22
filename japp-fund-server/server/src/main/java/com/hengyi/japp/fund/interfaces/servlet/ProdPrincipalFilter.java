@@ -1,10 +1,10 @@
 package com.hengyi.japp.fund.interfaces.servlet;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.Util;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
 import com.sun.security.auth.UserPrincipal;
 import io.jsonwebtoken.Claims;
-import org.jzb.J;
 
 import javax.inject.Inject;
 import javax.servlet.*;

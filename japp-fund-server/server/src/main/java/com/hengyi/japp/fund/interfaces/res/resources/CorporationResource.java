@@ -3,6 +3,7 @@ package com.hengyi.japp.fund.interfaces.res.resources;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.Multimap;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.CorporationService;
@@ -10,7 +11,6 @@ import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.repository.CorporationRepository;
 import org.hibernate.validator.constraints.NotBlank;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,8 +21,8 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.jzb.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-10-26.

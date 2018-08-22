@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.ApplicationEvents;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.OperatorService;
@@ -17,7 +18,6 @@ import com.hengyi.japp.fund.domain.repository.OperatorPermissionRepository;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
 import com.hengyi.japp.fund.interfaces.oa.OaService;
 import com.hengyi.japp.fund.interfaces.oa.OperatorSuggest;
-import org.jzb.J;
 
 import javax.inject.Inject;
 import java.security.Principal;

@@ -2,10 +2,10 @@ package com.hengyi.japp.fund.domain.permission;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.fund.domain.AbstractEntity;
 import com.hengyi.japp.fund.share.CURDEntity;
-import org.jzb.J;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;

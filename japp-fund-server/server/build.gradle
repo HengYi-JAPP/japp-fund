@@ -1,36 +1,41 @@
 allprojects {
     group 'com.hengyi.japp'
     version '1.0'
+
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url 'https://plugins.gradle.org/m2' }
+        maven { url 'https://jitpack.io' }
     }
+
     apply plugin: 'idea'
     apply plugin: "maven"
     apply plugin: 'maven-publish'
-    apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-    ext {
-        jzbVersion = '1.0'
-        libraries = [
-                javaee_api         : "javax:javaee-api:7.0",
-                hibernate_validator: "org.hibernate:hibernate-validator:5.4.1.Final",
-                jpa_modelgen       : "org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.7.0",
-        ]
-    }
 }
+
 apply plugin: 'war'
+apply plugin: 'java'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "com.github.ixtf.japp:ee:${jappVersion}",
+            "com.github.ixtf.japp:codec:${jappVersion}",
+            "com.github.ixtf.japp:poi:${jappVersion}",
+            'io.jsonwebtoken:jjwt:0.9.1',
+            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.6',
+            'commons-dbutils:commons-dbutils:1.6'
+
+    compileOnly "javax:javaee-api:7.0",
+            "org.hibernate:hibernate-validator:5.4.1.Final",
+            "org.eclipse.persistence:org.eclipse.persistence.jpa.modelgen.processor:2.7.0",
+            "org.projectlombok:lombok:${lombokVersion}"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12',
+            "org.projectlombok:lombok:${lombokVersion}"
+}
+
 war {
     archiveName 'fund-server.war'
-}
-dependencies {
-    compile "org.jzb:jzb-jee:${jzbVersion}",
-            "org.jzb:jzb-poi:${jzbVersion}",
-            'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.5',
-            'commons-dbutils:commons-dbutils:1.6'
-    compileOnly libraries.javaee_api,
-            libraries.hibernate_validator,
-            libraries.jpa_modelgen
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }

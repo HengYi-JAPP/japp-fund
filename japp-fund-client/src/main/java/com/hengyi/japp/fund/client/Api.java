@@ -1,7 +1,8 @@
 package com.hengyi.japp.fund.client;
 
+import com.github.ixtf.japp.codec.Jcodec;
+import com.github.ixtf.japp.core.J;
 import okhttp3.*;
-import org.jzb.J;
 
 import javax.ws.rs.core.StreamingOutput;
 import java.io.InputStream;
@@ -24,19 +25,6 @@ public class Api {
             .readTimeout(1, TimeUnit.HOURS)
             .build();
     public static final MediaType OK_JSON = MediaType.parse("application/json; charset=utf-8");
-
-    public static class Urls {
-        public static final String BASE_API_URL = "http://task.hengyi.com:8080/fund-server/api";
-        public static final String AUTH = BASE_API_URL + "/auth";
-        public static final String CORPORATIONS = BASE_API_URL + "/corporations";
-        public static final String MONTHFUNDPLANS = BASE_API_URL + "/monthFundPlans";
-        public static final String REPORTS_SUM_BALANCES = BASE_API_URL + "/reports/sum/balances";
-        public static final String REPORTS_SUM_BALANCES_CONFIG = REPORTS_SUM_BALANCES + "/config";
-        public static final String BALANCES = BASE_API_URL + "/balances";
-        public static final String FUNDLIKES = BASE_API_URL + "/fundlikes";
-        public static final String BATCH_FUNDLIKES = BASE_API_URL + "/batchFundlikes";
-        public static final String EXPORTS = BASE_API_URL + "/exports";
-    }
 
     public static Request buildGet(Principal principal, String url, Map<String, Object> paramMap) {
         String token = principal.getName();
@@ -64,7 +52,7 @@ public class Api {
             }
             try (ResponseBody body = response.body();
                  InputStream is = body.byteStream()) {
-                Path path = Paths.get(TMP_PATH, J.uuid58() + ".xlsx");
+                Path path = Paths.get(TMP_PATH, Jcodec.uuid58() + ".xlsx");
                 Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
                 return (out) -> Files.copy(path, out);
             }
@@ -157,5 +145,18 @@ public class Api {
                     .collect(Collectors.joining("&"));
         }
         return key + "=" + o.toString();
+    }
+
+    public static class Urls {
+        public static final String BASE_API_URL = "http://task.hengyi.com:8080/fund-server/api";
+        public static final String AUTH = BASE_API_URL + "/auth";
+        public static final String CORPORATIONS = BASE_API_URL + "/corporations";
+        public static final String MONTHFUNDPLANS = BASE_API_URL + "/monthFundPlans";
+        public static final String REPORTS_SUM_BALANCES = BASE_API_URL + "/reports/sum/balances";
+        public static final String REPORTS_SUM_BALANCES_CONFIG = REPORTS_SUM_BALANCES + "/config";
+        public static final String BALANCES = BASE_API_URL + "/balances";
+        public static final String FUNDLIKES = BASE_API_URL + "/fundlikes";
+        public static final String BATCH_FUNDLIKES = BASE_API_URL + "/batchFundlikes";
+        public static final String EXPORTS = BASE_API_URL + "/exports";
     }
 }

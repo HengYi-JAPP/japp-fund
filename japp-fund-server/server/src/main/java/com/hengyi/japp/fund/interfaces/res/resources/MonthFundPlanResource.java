@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.res.resources;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.FundlikeService;
 import com.hengyi.japp.fund.application.MonthFundPlanService;
@@ -13,7 +14,6 @@ import com.hengyi.japp.fund.domain.repository.CorporationRepository;
 import com.hengyi.japp.fund.domain.repository.CurrencyRepository;
 import com.hengyi.japp.fund.domain.repository.MonthFundPlanRepository;
 import org.hibernate.validator.constraints.NotBlank;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

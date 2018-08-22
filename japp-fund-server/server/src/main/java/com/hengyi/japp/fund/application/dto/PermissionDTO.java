@@ -2,6 +2,7 @@ package com.hengyi.japp.fund.application.dto;
 
 import com.hengyi.japp.fund.domain.permission.Permission;
 import com.hengyi.japp.fund.domain.permission.RoleType;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,6 +13,7 @@ import java.util.Set;
 /**
  * Created by jzb on 16-11-19.
  */
+@Data
 public class PermissionDTO implements Serializable {
     private boolean allCorporation;
     private Set<String> corporationIds;
@@ -31,46 +33,6 @@ public class PermissionDTO implements Serializable {
         Collection<String> currencyIds = allCurrency ? Permission.ALL : this.currencyIds;
         permission.setCurrencyIds(currencyIds);
         return permission;
-    }
-
-    public boolean isAllCorporation() {
-        return allCorporation;
-    }
-
-    public void setAllCorporation(boolean allCorporation) {
-        this.allCorporation = allCorporation;
-    }
-
-    public boolean isAllCurrency() {
-        return allCurrency;
-    }
-
-    public void setAllCurrency(boolean allCurrency) {
-        this.allCurrency = allCurrency;
-    }
-
-    public Set<String> getCorporationIds() {
-        return corporationIds;
-    }
-
-    public void setCorporationIds(Set<String> corporationIds) {
-        this.corporationIds = corporationIds;
-    }
-
-    public Set<String> getCurrencyIds() {
-        return currencyIds;
-    }
-
-    public void setCurrencyIds(Set<String> currencyIds) {
-        this.currencyIds = currencyIds;
-    }
-
-    public Collection<RoleType> getRoleTypes() {
-        return roleTypes;
-    }
-
-    public void setRoleTypes(Collection<RoleType> roleTypes) {
-        this.roleTypes = roleTypes;
     }
 
 }

@@ -1,11 +1,11 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.Util;
 import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.FundBalance;
 import com.hengyi.japp.fund.domain.repository.FundBalanceRepository;
-import org.jzb.J;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;

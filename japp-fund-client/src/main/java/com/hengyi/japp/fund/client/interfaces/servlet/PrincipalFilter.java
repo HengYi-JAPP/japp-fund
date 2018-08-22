@@ -1,12 +1,13 @@
 package com.hengyi.japp.fund.client.interfaces.servlet;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.core.exception.JAuthenticationException;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.sun.security.auth.UserPrincipal;
+import lombok.SneakyThrows;
 import org.jasig.cas.client.util.AssertionHolder;
 import org.jasig.cas.client.validation.Assertion;
-import org.jzb.J;
-import org.jzb.exception.JNonAuthenticationError;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -32,21 +33,19 @@ public class PrincipalFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         chain.doFilter(new HttpServletRequestWrapper((HttpServletRequest) request) {
+            @SneakyThrows
             @Override
             public Principal getUserPrincipal() {
-                try {
-                    Assertion assertion = AssertionHolder.getAssertion();
-                    String key = Optional.ofNullable(assertion)
-                            .map(Assertion::getPrincipal)
-                            .map(Principal::getName)
-                            .orElse(null);
-                    if (J.nonBlank(key)) {
-                        AccessToken accessToken = cache.get(key, () -> new AccessToken(assertion));
-                        return new UserPrincipal(accessToken.token());
-                    }
-                } catch (Exception e) {
+                Assertion assertion = AssertionHolder.getAssertion();
+                String key = Optional.ofNullable(assertion)
+                        .map(Assertion::getPrincipal)
+                        .map(Principal::getName)
+                        .orElseThrow(() -> new JAuthenticationException());
+                if (J.nonBlank(key)) {
+                    AccessToken accessToken = cache.get(key, () -> new AccessToken(assertion));
+                    return new UserPrincipal(accessToken.token());
                 }
-                throw new JNonAuthenticationError();
+                throw new JAuthenticationException();
             }
         }, response);
     }

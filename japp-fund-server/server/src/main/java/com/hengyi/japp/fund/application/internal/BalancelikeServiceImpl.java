@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.BalancelikeService;
 import com.hengyi.japp.fund.application.FundlikeService;
 import com.hengyi.japp.fund.domain.*;
@@ -7,7 +8,6 @@ import com.hengyi.japp.fund.domain.repository.CurrencyRepository;
 import com.hengyi.japp.fund.domain.repository.FundBalanceRepository;
 import com.hengyi.japp.fund.interfaces.fi.FiService;
 import org.apache.commons.lang3.tuple.Triple;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

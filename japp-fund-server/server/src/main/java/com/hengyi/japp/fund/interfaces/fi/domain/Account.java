@@ -61,10 +61,16 @@ public class Account implements Serializable, AuthService.AuthFilterable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Account that = (Account) o;
-        if (id == null || that.id == null) return false;
+        if (id == null || that.id == null) {
+            return false;
+        }
         return Objects.equals(id, that.id);
     }
 

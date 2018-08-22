@@ -1,8 +1,9 @@
 package com.hengyi.japp.fund.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.ixtf.japp.codec.Jcodec;
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.share.CURDEntity;
-import org.jzb.J;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -47,7 +48,7 @@ public class FundBalance extends AbstractEntity implements CURDEntity<String>, C
         String corporationId = corporation.getId();
         String currencyId = currency.getId();
         String dateS = J.localDate(date).toString();
-        return J.uuid58(corporationId, currencyId, dateS);
+        return Jcodec.uuid58(corporationId, currencyId, dateS);
     }
 
     @JsonIgnore

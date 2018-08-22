@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.fund.application.CalculateFundBalanceService;
 import com.hengyi.japp.fund.domain.Corporation;
@@ -11,7 +12,6 @@ import com.hengyi.japp.fund.domain.repository.CurrencyRepository;
 import com.hengyi.japp.fund.domain.repository.FundBalanceRepository;
 import com.hengyi.japp.fund.domain.repository.FundRepository;
 import org.apache.commons.lang3.time.DateUtils;
-import org.jzb.J;
 
 import javax.ejb.AccessTimeout;
 import javax.ejb.Singleton;

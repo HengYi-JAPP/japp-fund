@@ -34,8 +34,9 @@ public class FundMdb implements MessageListener {
         try {
             MapMessage msg = (MapMessage) inMessage;
             String entityClass = msg.getString("entityClass");
-            if (!Objects.equals(entityClass, Fund.class.getName()))
+            if (!Objects.equals(entityClass, Fund.class.getName())) {
                 return;
+            }
 
             eventService.save(FundEvent.class, msg);
         } catch (Throwable e) {

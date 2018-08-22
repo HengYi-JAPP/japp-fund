@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.oa.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.Constant;
 import com.hengyi.japp.fund.application.command.OperatorImportCommand;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
@@ -7,7 +8,6 @@ import com.hengyi.japp.fund.interfaces.oa.OaService;
 import com.hengyi.japp.fund.interfaces.oa.OperatorSuggest;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.jzb.J;
 
 import javax.annotation.Resource;
 import javax.ejb.Stateless;

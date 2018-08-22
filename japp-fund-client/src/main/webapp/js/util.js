@@ -20,19 +20,6 @@ var _J = /** @class */ (function () {
         var body = JSON.stringify(fund);
         return fund.id ? _J.updateFundlike(fund.id, body, monthFundPlanId) : _J.createFundlike(monthFundPlanId, body);
     };
-    _J.createFundlike = function (monthFundPlanId, body) {
-        return $.ajax({
-            type: 'POST',
-            url: './api/monthFundPlans/' + monthFundPlanId + '/fundlikes',
-            data: body,
-            contentType: 'application/json',
-            dataType: 'json',
-        });
-    };
-    _J.updateFundlike = function (id, body, monthFundPlanId) {
-        var url = monthFundPlanId ? './api/monthFundPlans/' + monthFundPlanId + '/fundlikes/' + id : './api/fundlikes/' + id;
-        return $.ajax({ type: 'PUT', url: url, data: body, contentType: 'application/json', dataType: 'json', });
-    };
     _J.deleteFundlike = function (id) {
         return $.ajax({ type: 'DELETE', url: './api/fundlikes/' + id, });
     };
@@ -108,6 +95,31 @@ var _J = /** @class */ (function () {
         return result;
     };
     ;
+    _J.generateWeekScrolls = function ($next, $container, weekDatas) {
+        weekDatas.forEach(function (weekData) {
+            var $weekScroll = $('<li><a href="javascript:">第' + weekData.index + '周</a></li>').on('click', function () {
+                var bcr = document.getElementById(weekData.domId).getBoundingClientRect();
+                //nav 高４２
+                $container.scrollTop($container.scrollTop() + bcr.top - 42);
+            });
+            $next.after($weekScroll);
+            $next = $weekScroll;
+        });
+    };
+    ;
+    _J.createFundlike = function (monthFundPlanId, body) {
+        return $.ajax({
+            type: 'POST',
+            url: './api/monthFundPlans/' + monthFundPlanId + '/fundlikes',
+            data: body,
+            contentType: 'application/json',
+            dataType: 'json',
+        });
+    };
+    _J.updateFundlike = function (id, body, monthFundPlanId) {
+        var url = monthFundPlanId ? './api/monthFundPlans/' + monthFundPlanId + '/fundlikes/' + id : './api/fundlikes/' + id;
+        return $.ajax({ type: 'PUT', url: url, data: body, contentType: 'application/json', dataType: 'json', });
+    };
     _J.addPrefixDates = function (dates) {
         if (dates.length === 7) {
             return;
@@ -126,18 +138,6 @@ var _J = /** @class */ (function () {
             dates.push(moment(date));
         }
     };
-    _J.generateWeekScrolls = function ($next, $container, weekDatas) {
-        weekDatas.forEach(function (weekData) {
-            var $weekScroll = $('<li><a href="javascript:">第' + weekData.index + '周</a></li>').on('click', function () {
-                var bcr = document.getElementById(weekData.domId).getBoundingClientRect();
-                //nav 高４２
-                $container.scrollTop($container.scrollTop() + bcr.top - 42);
-            });
-            $next.after($weekScroll);
-            $next = $weekScroll;
-        });
-    };
-    ;
     _J.WEEK_DAYS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
     return _J;
 }());

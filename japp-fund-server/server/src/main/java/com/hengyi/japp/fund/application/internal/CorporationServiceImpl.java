@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.security.Principal;
 
-import static org.jzb.Constant.MAPPER;
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-11-19.

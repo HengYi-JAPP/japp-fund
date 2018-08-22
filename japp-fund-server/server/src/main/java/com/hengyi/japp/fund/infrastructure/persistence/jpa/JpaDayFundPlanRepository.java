@@ -1,10 +1,10 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.DayFundPlan;
 import com.hengyi.japp.fund.domain.repository.DayFundPlanRepository;
-import org.jzb.J;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;

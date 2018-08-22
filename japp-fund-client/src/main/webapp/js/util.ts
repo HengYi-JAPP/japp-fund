@@ -4,6 +4,8 @@ declare var moment: any;
 
 class _J {
 
+    static readonly WEEK_DAYS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
     static listReportsSumBalances(params: any): any {
         return $.getJSON('./api/reports/sum/balances', params);
     }
@@ -25,21 +27,6 @@ class _J {
     static saveFundlike(monthFundPlanId: string, fund: any): any {
         const body = JSON.stringify(fund);
         return fund.id ? _J.updateFundlike(fund.id, body, monthFundPlanId) : _J.createFundlike(monthFundPlanId, body);
-    }
-
-    private static createFundlike(monthFundPlanId: string, body: string): any {
-        return $.ajax({
-            type: 'POST',
-            url: './api/monthFundPlans/' + monthFundPlanId + '/fundlikes',
-            data: body,
-            contentType: 'application/json',
-            dataType: 'json',
-        });
-    }
-
-    private static updateFundlike(id: string, body: string, monthFundPlanId?: string): any {
-        const url = monthFundPlanId ? './api/monthFundPlans/' + monthFundPlanId + '/fundlikes/' + id : './api/fundlikes/' + id;
-        return $.ajax({type: 'PUT', url, data: body, contentType: 'application/json', dataType: 'json',});
     }
 
     static deleteFundlike(id: string): any {
@@ -105,8 +92,6 @@ class _J {
         }, options)
     }
 
-    static readonly WEEK_DAYS = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
-
     static generateMonthWeeks(initDate: any): any[] {
         const result = [];
         const sDate = moment([initDate.year(), initDate.month()]);
@@ -128,6 +113,33 @@ class _J {
         return result;
     };
 
+    static generateWeekScrolls($next, $container, weekDatas: any[]) {
+        weekDatas.forEach(weekData => {
+            const $weekScroll = $('<li><a href="javascript:">第' + weekData.index + '周</a></li>').on('click', () => {
+                const bcr = document.getElementById(weekData.domId).getBoundingClientRect();
+                //nav 高４２
+                $container.scrollTop($container.scrollTop() + bcr.top - 42);
+            });
+            $next.after($weekScroll);
+            $next = $weekScroll;
+        });
+    };
+
+    private static createFundlike(monthFundPlanId: string, body: string): any {
+        return $.ajax({
+            type: 'POST',
+            url: './api/monthFundPlans/' + monthFundPlanId + '/fundlikes',
+            data: body,
+            contentType: 'application/json',
+            dataType: 'json',
+        });
+    }
+
+    private static updateFundlike(id: string, body: string, monthFundPlanId?: string): any {
+        const url = monthFundPlanId ? './api/monthFundPlans/' + monthFundPlanId + '/fundlikes/' + id : './api/fundlikes/' + id;
+        return $.ajax({type: 'PUT', url, data: body, contentType: 'application/json', dataType: 'json',});
+    }
+
     private static addPrefixDates(dates: any[]) {
         if (dates.length === 7) {
             return;
@@ -147,18 +159,6 @@ class _J {
             dates.push(moment(date));
         }
     }
-
-    static generateWeekScrolls($next, $container, weekDatas: any[]) {
-        weekDatas.forEach(weekData => {
-            const $weekScroll = $('<li><a href="javascript:">第' + weekData.index + '周</a></li>').on('click', () => {
-                const bcr = document.getElementById(weekData.domId).getBoundingClientRect();
-                //nav 高４２
-                $container.scrollTop($container.scrollTop() + bcr.top - 42);
-            });
-            $next.after($weekScroll);
-            $next = $weekScroll;
-        });
-    };
 }
 
 window['J'] = _J;

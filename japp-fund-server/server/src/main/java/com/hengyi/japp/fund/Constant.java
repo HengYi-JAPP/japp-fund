@@ -25,11 +25,11 @@ public class Constant {
             FileUtils.forceMkdir(tmpDir);
             TMP_PATH = tmpDir.getPath();
 
-            final String configPath = System.getProperty("FUND_SERVER_CONFIG", "/home/jzb/japp-fund-server/config.properties");
+            final String configPath = System.getProperty("FUND_SERVER_CONFIG", "/home/japp-fund-server/config.properties");
             CONFIG = new Properties();
             CONFIG.load(new FileInputStream(FileUtils.getFile(configPath)));
 
-            BALANCE_SUM_PATH = CONFIG.getProperty("BALANCE_SUM_PATH", "/home/jzb/japp-fund-server/BalanceSum");
+            BALANCE_SUM_PATH = CONFIG.getProperty("BALANCE_SUM_PATH", "/home/japp-fund-server/BalanceSum");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

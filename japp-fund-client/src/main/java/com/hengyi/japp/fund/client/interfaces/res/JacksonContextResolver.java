@@ -7,8 +7,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.jzb.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-10-26.

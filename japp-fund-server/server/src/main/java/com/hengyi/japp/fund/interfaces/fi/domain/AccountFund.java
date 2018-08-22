@@ -1,9 +1,9 @@
 package com.hengyi.japp.fund.interfaces.fi.domain;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.Fundlike;
-import org.jzb.J;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -82,10 +82,16 @@ public class AccountFund implements Fundlike, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AccountFund that = (AccountFund) o;
-        if (id == null || that.id == null) return false;
+        if (id == null || that.id == null) {
+            return false;
+        }
         return Objects.equals(id, that.id);
     }
 

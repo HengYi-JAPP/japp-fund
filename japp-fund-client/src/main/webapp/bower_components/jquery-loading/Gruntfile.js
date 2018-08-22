@@ -1,17 +1,17 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
     meta: {
       banner: '/*\n' +
-				' *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
-				' *  <%= pkg.description %>\n' +
-				' *  <%= pkg.url %>\n' +
-				' *\n' +
-				' *  Made by <%= pkg.author %>\n' +
-				' *  Under <%= pkg.license %> License\n' +
-				' */\n'
+        ' *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
+        ' *  <%= pkg.description %>\n' +
+        ' *  <%= pkg.url %>\n' +
+        ' *\n' +
+        ' *  Made by <%= pkg.author %>\n' +
+        ' *  Under <%= pkg.license %> License\n' +
+        ' */\n'
     },
 
     concat: {

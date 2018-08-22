@@ -1,10 +1,10 @@
 package com.hengyi.japp.fund.domain.event;
 
+import com.github.ixtf.japp.ee.Jee;
 import com.hengyi.japp.fund.domain.AbstractEntity;
 import com.hengyi.japp.fund.domain.Operator;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
 import org.hibernate.validator.constraints.NotBlank;
-import org.jzb.ee.JEE;
 
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
@@ -34,7 +34,7 @@ public abstract class EventEntity extends AbstractEntity {
 
     public void from(MapMessage msg) throws JMSException {
         entityId = msg.getString("id");
-        OperatorRepository operatorRepository = JEE.getBean(OperatorRepository.class);
+        OperatorRepository operatorRepository = Jee.getBean(OperatorRepository.class);
         operator = operatorRepository.find(msg.getString("principal"));
         dateTime = new Date();
         command = msg.getString("command");

@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.ApplicationEvents;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.OperatorGroupService;
@@ -12,15 +13,12 @@ import com.hengyi.japp.fund.domain.permission.Permission;
 import com.hengyi.japp.fund.domain.repository.OperatorGroupRepository;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
 import com.hengyi.japp.fund.exception.PermissionInputException;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.stream.Collectors;
-
-import static org.jzb.Constant.ErrorCode.SYSTEM;
 
 /**
  * Created by jzb on 16-11-19.
@@ -47,7 +45,7 @@ public class OperatorGroupServiceImpl implements OperatorGroupService {
         authService.checkAdmin(principal);
         operatorGroup.setName(command.getName());
         if (J.isEmpty(command.getPermissions())) {
-            throw new PermissionInputException(SYSTEM, null);
+            throw new PermissionInputException();
         }
         Collection<Permission> permissions = command.getPermissions().stream()
                 .map(PermissionDTO::toPermission)

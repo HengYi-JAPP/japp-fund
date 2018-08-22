@@ -1,12 +1,12 @@
 package com.hengyi.japp.fund.application.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.AdminService;
 import com.hengyi.japp.fund.application.AuthService;
 import com.hengyi.japp.fund.application.command.AppClientUpdateCommand;
 import com.hengyi.japp.fund.application.command.InitCdhpCommand;
 import com.hengyi.japp.fund.domain.*;
 import com.hengyi.japp.fund.domain.repository.*;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.res.resources;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.hengyi.japp.fund.application.AuthService;
@@ -8,7 +9,6 @@ import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.repository.CorporationRepository;
 import com.hengyi.japp.fund.domain.repository.CurrencyRepository;
-import org.jzb.J;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

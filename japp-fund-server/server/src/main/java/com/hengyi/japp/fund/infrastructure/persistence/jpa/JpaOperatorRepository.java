@@ -1,9 +1,9 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.Util;
 import com.hengyi.japp.fund.domain.Operator;
 import com.hengyi.japp.fund.domain.repository.OperatorRepository;
-import org.jzb.J;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.TypedQuery;
@@ -23,22 +23,26 @@ public class JpaOperatorRepository extends JpaCURDRepository<Operator, String> i
     @Override
     public Operator findByCas(String casPrincipal, String oaId) {
         Operator result = find(casPrincipal);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         result = findByHrIdOrOaId(casPrincipal);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         return J.isBlank(oaId) ? null : findByHrIdOrOaId(oaId);
     }
 
     @Override
     public Operator findByHrIdOrOaId(String id) {
         Operator result = findByHrId(id);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         result = findByOaId(id);
-        if (result != null)
+        if (result != null) {
             return result;
+        }
         return null;
     }
 

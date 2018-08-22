@@ -5,7 +5,7 @@
 
     <filter>
         <filter-name>Character Encoding Filter</filter-name>
-        <filter-class>org.jzb.web.CharacterEncodingFilter</filter-class>
+        <filter-class>com.github.ixtf.japp.ee.filter.CharacterEncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>Character Encoding Filter</filter-name>

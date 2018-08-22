@@ -12,9 +12,9 @@ import javax.inject.Inject;
 import javax.jms.*;
 import java.security.Principal;
 
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 import static com.hengyi.japp.fund.infrastructure.messaging.jms.JmsApplicationEvents.QUEUE;
 import static com.hengyi.japp.fund.infrastructure.messaging.jms.JmsApplicationEvents.TOPIC;
-import static org.jzb.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-10-20.
@@ -22,13 +22,11 @@ import static org.jzb.Constant.MAPPER;
 @JMSDestinationDefinitions({
         @JMSDestinationDefinition(
                 name = QUEUE,
-                resourceAdapter = "jmsra",
                 interfaceName = "javax.jms.Queue",
                 destinationName = "jappFundServer_Queue",
                 description = "jappFund Queue"),
         @JMSDestinationDefinition(
                 name = TOPIC,
-                resourceAdapter = "jmsra",
                 interfaceName = "javax.jms.Topic",
                 destinationName = "jappFundServer_Topic",
                 description = "jappFund Topic"),

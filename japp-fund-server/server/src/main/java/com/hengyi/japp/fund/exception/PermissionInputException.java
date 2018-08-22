@@ -1,14 +1,14 @@
 package com.hengyi.japp.fund.exception;
 
-import org.jzb.exception.JException;
+import com.github.ixtf.japp.core.exception.JException;
 
-import java.util.Map;
+import static com.github.ixtf.japp.core.Constant.ErrorCode.SYSTEM;
 
 /**
  * Created by jzb on 16-11-20.
  */
 public class PermissionInputException extends JException {
-    public PermissionInputException(String errorCode, Map<String, String> params) {
-        super(errorCode, params);
+    public PermissionInputException() {
+        super(SYSTEM);
     }
 }

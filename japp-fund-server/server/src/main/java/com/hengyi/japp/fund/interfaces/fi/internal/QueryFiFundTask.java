@@ -1,9 +1,9 @@
 package com.hengyi.japp.fund.interfaces.fi.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ImmutableMap;
 import com.hengyi.japp.fund.interfaces.fi.domain.Account;
 import com.hengyi.japp.fund.interfaces.fi.domain.AccountFund;
-import org.jzb.J;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -27,9 +27,7 @@ public class QueryFiFundTask extends RecursiveTask<Stream<AccountFund>> {
         this.accountMap = accountMap;
         this.ldStart = ldStart;
         this.ldEnd = ldEnd;
-
-        String sqlTpl = "SELECT * FROM ${table} WHERE ACCOUNTID=${accountId} AND TO_CHAR(TRANSACTIONTIME,'yyyy-mm-dd')>='${sDate}' AND TO_CHAR(TRANSACTIONTIME,'yyyy-mm-dd')<='${eDate}' AND ISDELETEDBYBANK=0";
-        this.sqlTpl = J.strTpl(sqlTpl, ImmutableMap.of("sDate", ldStart.toString(), "eDate", ldEnd.toString()));
+        this.sqlTpl = "SELECT * FROM ${table} WHERE ACCOUNTID=${accountId} AND TO_CHAR(TRANSACTIONTIME,'yyyy-mm-dd')>='" + ldStart + "' AND TO_CHAR(TRANSACTIONTIME,'yyyy-mm-dd')<='" + ldEnd + "' AND ISDELETEDBYBANK=0";
     }
 
     @Override
@@ -38,11 +36,14 @@ public class QueryFiFundTask extends RecursiveTask<Stream<AccountFund>> {
             return Stream.empty();
         }
 
-        return accountMap.values()
+        final Single[] singleTasks = accountMap.values()
                 .stream()
                 .parallel()
                 .map(Single::new)
-                .peek(Single::fork)
+                .toArray(Single[]::new);
+        invokeAll(singleTasks);
+
+        return Stream.of(singleTasks)
                 .flatMap(Single::join)
                 // 合并日执行，小于 DEFAULT_MIN_THRESHOLD 的全部当做一笔
                 .collect(Collectors.groupingBy(AccountFund::triple))

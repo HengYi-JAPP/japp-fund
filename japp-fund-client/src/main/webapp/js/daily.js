@@ -2,6 +2,8 @@ var DailyPage = /** @class */ (function () {
     function DailyPage(corporationId, currencyId, date, divideDate) {
         var _this = this;
         this.$table = $('#page-table').loading();
+        this.fundUpdateModal = new FundUpdateModal(this);
+        this.batchFundUpdateModal = new BatchFundUpdateModal(this);
         this.$pageForm = $('#pageForm').on('submit', function () {
             var params = _this.formParams();
             _this.$pageForm.find('input[name="corporationId"]').val(params.corporationId);
@@ -12,8 +14,6 @@ var DailyPage = /** @class */ (function () {
             _this.$pageForm.find('input[name="divideMonth"]').val(params.divideMonth);
             _this.$pageForm.find('input[name="divideDay"]').val(params.divideDay);
         });
-        this.fundUpdateModal = new FundUpdateModal(this);
-        this.batchFundUpdateModal = new BatchFundUpdateModal(this);
         this.date = moment(date);
         this.divideDate = moment(divideDate);
         this.weekDatas = J.generateMonthWeeks(this.date).map(function (dates, index) { return new DailyWeekData(_this, dates, index + 1); });
@@ -128,17 +128,6 @@ var DailyPage = /** @class */ (function () {
             _this.$table.loading('toggle');
         });
     };
-    DailyPage.prototype.formParams = function () {
-        return {
-            corporationId: this.corporation && this.corporation.id,
-            currencyId: this.currency && this.currency.id,
-            year: this.date.year(),
-            month: this.date.month() + 1,
-            divideYear: this.divideDate.year(),
-            divideMonth: this.divideDate.month() + 1,
-            divideDay: this.divideDate.date(),
-        };
-    };
     DailyPage.prototype.monthAdd = function (i) {
         if (i === void 0) { i = 1; }
         this.date = moment(this.date).add(i, 'M');
@@ -156,6 +145,17 @@ var DailyPage = /** @class */ (function () {
         delete params.corporationId;
         delete params.currencyId;
         J.exportXlsx(params);
+    };
+    DailyPage.prototype.formParams = function () {
+        return {
+            corporationId: this.corporation && this.corporation.id,
+            currencyId: this.currency && this.currency.id,
+            year: this.date.year(),
+            month: this.date.month() + 1,
+            divideYear: this.divideDate.year(),
+            divideMonth: this.divideDate.month() + 1,
+            divideDay: this.divideDate.date(),
+        };
     };
     return DailyPage;
 }());
@@ -261,6 +261,27 @@ var DailyDayData = /** @class */ (function () {
         this.lackBalance = this.preBalance + outFundsSum;
         this.calcTodayBalance = this.preBalance + inFundsSum + outFundsSum;
     }
+    DailyDayData.prototype.preBalanceTds = function () {
+        return this.balanceTds(this.preBalance);
+    };
+    DailyDayData.prototype.lackBalanceTds = function () {
+        return this.balanceTds(this.lackBalance);
+    };
+    DailyDayData.prototype.todayBalanceTds = function () {
+        return this.balanceTds(this.todayBalance);
+    };
+    DailyDayData.prototype.outFundTds = function (rowIndex) {
+        return this.fundTds(this.outFunds, rowIndex);
+    };
+    DailyDayData.prototype.outFundsCount = function () {
+        return this.outFunds ? this.outFunds.length : 0;
+    };
+    DailyDayData.prototype.inFundTds = function (rowIndex) {
+        return this.fundTds(this.inFunds, rowIndex);
+    };
+    DailyDayData.prototype.inFundsCount = function () {
+        return this.inFunds ? this.inFunds.length : 0;
+    };
     DailyDayData.prototype.balanceTds = function (balance) {
         var result = [$('<td></td>'), $('<td></td>')];
         var $td = result[0];
@@ -288,27 +309,6 @@ var DailyDayData = /** @class */ (function () {
             }
         }
         return result;
-    };
-    DailyDayData.prototype.preBalanceTds = function () {
-        return this.balanceTds(this.preBalance);
-    };
-    DailyDayData.prototype.lackBalanceTds = function () {
-        return this.balanceTds(this.lackBalance);
-    };
-    DailyDayData.prototype.todayBalanceTds = function () {
-        return this.balanceTds(this.todayBalance);
-    };
-    DailyDayData.prototype.outFundTds = function (rowIndex) {
-        return this.fundTds(this.outFunds, rowIndex);
-    };
-    DailyDayData.prototype.outFundsCount = function () {
-        return this.outFunds ? this.outFunds.length : 0;
-    };
-    DailyDayData.prototype.inFundTds = function (rowIndex) {
-        return this.fundTds(this.inFunds, rowIndex);
-    };
-    DailyDayData.prototype.inFundsCount = function () {
-        return this.inFunds ? this.inFunds.length : 0;
     };
     return DailyDayData;
 }());

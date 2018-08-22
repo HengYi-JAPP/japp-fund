@@ -4,6 +4,14 @@ declare var J: any;
 
 class DailyPage {
     readonly $table = $('#page-table').loading();
+    readonly fundUpdateModal = new FundUpdateModal(this);
+    readonly batchFundUpdateModal = new BatchFundUpdateModal(this);
+    corporation: any;
+    currency: any;
+    date: any;
+    divideDate: any;
+    balances: any[];
+    funds: any[];
     private readonly $pageForm = $('#pageForm').on('submit', () => {
         const params = this.formParams();
         this.$pageForm.find('input[name="corporationId"]').val(params.corporationId);
@@ -14,15 +22,7 @@ class DailyPage {
         this.$pageForm.find('input[name="divideMonth"]').val(params.divideMonth);
         this.$pageForm.find('input[name="divideDay"]').val(params.divideDay);
     });
-    readonly fundUpdateModal = new FundUpdateModal(this);
-    readonly batchFundUpdateModal = new BatchFundUpdateModal(this);
     private readonly weekDatas: DailyWeekData[];
-    corporation: any;
-    currency: any;
-    date: any;
-    divideDate: any;
-    balances: any[];
-    funds: any[];
 
     constructor(corporationId: string, currencyId: string, date: string, divideDate: string) {
         this.date = moment(date);
@@ -143,18 +143,6 @@ class DailyPage {
         });
     }
 
-    private formParams(): any {
-        return {
-            corporationId: this.corporation && this.corporation.id,
-            currencyId: this.currency && this.currency.id,
-            year: this.date.year(),
-            month: this.date.month() + 1,
-            divideYear: this.divideDate.year(),
-            divideMonth: this.divideDate.month() + 1,
-            divideDay: this.divideDate.date(),
-        }
-    }
-
     monthAdd(i = 1) {
         this.date = moment(this.date).add(i, 'M');
         this.divideDate = moment();
@@ -174,6 +162,18 @@ class DailyPage {
         delete params.corporationId;
         delete params.currencyId;
         J.exportXlsx(params);
+    }
+
+    private formParams(): any {
+        return {
+            corporationId: this.corporation && this.corporation.id,
+            currencyId: this.currency && this.currency.id,
+            year: this.date.year(),
+            month: this.date.month() + 1,
+            divideYear: this.divideDate.year(),
+            divideMonth: this.divideDate.month() + 1,
+            divideDay: this.divideDate.date(),
+        }
     }
 }
 
@@ -283,6 +283,34 @@ class DailyDayData {
         this.calcTodayBalance = this.preBalance + inFundsSum + outFundsSum;
     }
 
+    preBalanceTds(): any[] {
+        return this.balanceTds(this.preBalance);
+    }
+
+    lackBalanceTds(): any[] {
+        return this.balanceTds(this.lackBalance);
+    }
+
+    todayBalanceTds(): any[] {
+        return this.balanceTds(this.todayBalance);
+    }
+
+    outFundTds(rowIndex: number): any[] {
+        return this.fundTds(this.outFunds, rowIndex);
+    }
+
+    outFundsCount(): number {
+        return this.outFunds ? this.outFunds.length : 0;
+    }
+
+    inFundTds(rowIndex: number): any[] {
+        return this.fundTds(this.inFunds, rowIndex);
+    }
+
+    inFundsCount(): number {
+        return this.inFunds ? this.inFunds.length : 0;
+    }
+
     private balanceTds(balance: number): any[] {
         const result = [$('<td></td>'), $('<td></td>')];
         const [$td] = result;
@@ -310,34 +338,6 @@ class DailyDayData {
             }
         }
         return result;
-    }
-
-    preBalanceTds(): any[] {
-        return this.balanceTds(this.preBalance);
-    }
-
-    lackBalanceTds(): any[] {
-        return this.balanceTds(this.lackBalance);
-    }
-
-    todayBalanceTds(): any[] {
-        return this.balanceTds(this.todayBalance);
-    }
-
-    outFundTds(rowIndex: number): any[] {
-        return this.fundTds(this.outFunds, rowIndex);
-    }
-
-    outFundsCount(): number {
-        return this.outFunds ? this.outFunds.length : 0;
-    }
-
-    inFundTds(rowIndex: number): any[] {
-        return this.fundTds(this.inFunds, rowIndex);
-    }
-
-    inFundsCount(): number {
-        return this.inFunds ? this.inFunds.length : 0;
     }
 }
 
@@ -416,6 +416,7 @@ class FundUpdateModal {
         const v = this.$money.val();
         this.$moneyDisplay.text($.formatMoney(v));
     });
+    private fund: any;
     private readonly $save = this.$modal.find('button[name="save"]').on('click', () => {
         $.extend(this.fund, {
             date: moment(this.$date.val()).toDate(),
@@ -436,8 +437,6 @@ class FundUpdateModal {
             this.$modal.modal('hide');
         });
     });
-
-    private fund: any;
 
     constructor(private page: DailyPage) {
     }

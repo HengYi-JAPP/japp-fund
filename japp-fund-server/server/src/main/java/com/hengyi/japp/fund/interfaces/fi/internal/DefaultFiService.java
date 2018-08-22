@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.fi.internal;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ImmutableMap;
 import com.hengyi.japp.fund.Constant;
 import com.hengyi.japp.fund.domain.Balancelike;
@@ -15,7 +16,6 @@ import com.hengyi.japp.fund.interfaces.fi.domain.Account;
 import com.hengyi.japp.fund.interfaces.fi.domain.AccountFund;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
-import org.jzb.J;
 import org.slf4j.Logger;
 
 import javax.annotation.Resource;
@@ -57,8 +57,16 @@ public class DefaultFiService implements FiService {
     @Inject
     private CurrencyRepository currencyRepository;
 
-    // 结束日期在当天之后，肯定会有一些天的余额需要重新通过 当前余额和日计划累计来计算
-    // 余额的获取必须完整，如果当天是 1月1日，那么查2月，3月的数据也必须补充完全
+    /**
+     * 结束日期在当天之后，肯定会有一些天的余额需要重新通过 当前余额和日计划累计来计算
+     * 余额的获取必须完整，如果当天是 1月1日，那么查2月，3月的数据也必须补充完全
+     *
+     * @param corporations
+     * @param currencies
+     * @param ldStart
+     * @param ldEnd
+     * @return
+     */
     @Override
     public Stream<? extends Balancelike> queryBalance(Set<Corporation> corporations, Set<Currency> currencies, LocalDate ldStart, LocalDate ldEnd) {
         Map<Object, Account> accountMap = queryAccountMap(corporations, currencies);
@@ -82,7 +90,7 @@ public class DefaultFiService implements FiService {
                             )
                     );
         }
-        QueryFiBalanceTask task = new QueryFiBalanceTask(querySqlFun, accountMap, ldStart, ldEnd);
+        final QueryFiBalanceTask task = new QueryFiBalanceTask(querySqlFun, accountMap, ldStart, ldEnd);
         return ForkJoinPool.commonPool().invoke(task);
     }
 
@@ -93,7 +101,7 @@ public class DefaultFiService implements FiService {
         if (J.isEmpty(accountMap)) {
             return Stream.empty();
         }
-        QueryFiFundTask task = new QueryFiFundTask(querySqlFun, accountMap, ldStart, ldEnd);
+        final QueryFiFundTask task = new QueryFiFundTask(querySqlFun, accountMap, ldStart, ldEnd);
         return ForkJoinPool.commonPool().invoke(task);
     }
 

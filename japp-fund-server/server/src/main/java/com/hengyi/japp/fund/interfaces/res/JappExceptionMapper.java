@@ -2,10 +2,9 @@ package com.hengyi.japp.fund.interfaces.res;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.github.ixtf.japp.core.exception.JException;
+import com.github.ixtf.japp.core.exception.JMultiException;
 import io.jsonwebtoken.ExpiredJwtException;
-import org.jzb.exception.JException;
-import org.jzb.exception.JMultiThrowable;
-import org.jzb.exception.JThrowable;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -14,9 +13,9 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-import static org.jzb.Constant.ErrorCode.SYSTEM;
-import static org.jzb.Constant.ErrorCode.TOKEN_EXPIRED;
-import static org.jzb.Constant.MAPPER;
+import static com.github.ixtf.japp.core.Constant.ErrorCode.SYSTEM;
+import static com.github.ixtf.japp.core.Constant.ErrorCode.TOKEN;
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-10-26.
@@ -30,16 +29,16 @@ public class JappExceptionMapper implements ExceptionMapper<Throwable> {
     public Response toResponse(Throwable ex) {
         Response.ResponseBuilder builder = Response.status(Status.FORBIDDEN);
         ArrayNode errors = MAPPER.createArrayNode();
-        if (ex instanceof JThrowable) {
-            JThrowable jex = (JException) ex;
+        if (ex instanceof JException) {
+            JException jex = (JException) ex;
             errors.add(jex.toJsonNode());
-        } else if (ex instanceof JMultiThrowable) {
-            JMultiThrowable jex = (JMultiThrowable) ex;
-            jex.jThrowables().stream()
-                    .map(JThrowable::toJsonNode)
+        } else if (ex instanceof JMultiException) {
+            JMultiException jex = (JMultiException) ex;
+            jex.getExceptions().stream()
+                    .map(JException::toJsonNode)
                     .forEach(errors::add);
         } else if (ex instanceof ExpiredJwtException) {
-            errors.add(MAPPER.createObjectNode().put("errorCode", TOKEN_EXPIRED));
+            errors.add(MAPPER.createObjectNode().put("errorCode", TOKEN));
         } else {
             log.error("", ex);
             ObjectNode error = MAPPER.createObjectNode()

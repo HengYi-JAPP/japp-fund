@@ -1,11 +1,11 @@
 package download;
 
+import com.github.ixtf.japp.codec.Jcodec;
 import com.google.common.collect.ImmutableMap;
 import com.hengyi.japp.fund.client.Api;
 import com.sun.security.auth.UserPrincipal;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.jzb.J;
 
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -36,7 +36,7 @@ public class DownloadTest {
         try (Response response = OK_CLIENT.newCall(request).execute();
              InputStream is = response.body().byteStream()) {
             if (response.isSuccessful()) {
-                Path path = Paths.get(TMP_PATH, J.uuid58() + ".xlsx");
+                Path path = Paths.get(TMP_PATH, Jcodec.uuid58() + ".xlsx");
                 Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
             }
         }

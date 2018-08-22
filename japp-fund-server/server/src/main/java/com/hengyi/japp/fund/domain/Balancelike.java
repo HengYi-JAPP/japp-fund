@@ -1,8 +1,8 @@
 package com.hengyi.japp.fund.domain;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.application.AuthService;
 import org.apache.commons.lang3.tuple.Triple;
-import org.jzb.J;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

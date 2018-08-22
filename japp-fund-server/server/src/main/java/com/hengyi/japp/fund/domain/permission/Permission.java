@@ -2,8 +2,8 @@ package com.hengyi.japp.fund.domain.permission;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ImmutableSet;
-import org.jzb.J;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static org.jzb.Constant.MAPPER;
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 
 /**
  * Created by jzb on 16-11-18.

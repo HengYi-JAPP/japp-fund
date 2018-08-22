@@ -1,11 +1,11 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.ee.Jee;
 import com.hengyi.japp.fund.domain.Corporation;
 import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.domain.FundBalance;
 import com.hengyi.japp.fund.domain.repository.FundBalanceRepository;
-import org.jzb.J;
-import org.jzb.ee.JEE;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ public class QueryFundBalanceTask extends RecursiveTask<Stream<FundBalance>> {
     private final LocalDate ldEnd;
 
     public QueryFundBalanceTask(Set<Corporation> corporations, Set<Currency> currencies, LocalDate ldStart, LocalDate ldEnd) {
-        fundBalanceRepository = JEE.getBean(FundBalanceRepository.class);
+        fundBalanceRepository = Jee.getBean(FundBalanceRepository.class);
         this.corporations = corporations;
         this.currencies = currencies
                 .stream()

@@ -1,8 +1,8 @@
 package com.hengyi.japp.fund.infrastructure.persistence.jpa;
 
+import com.github.ixtf.japp.core.J;
 import com.hengyi.japp.fund.share.CURDEntity;
 import com.hengyi.japp.fund.share.CURDEntityRepository;
-import org.jzb.J;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;

@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.xlsx.export.dayFund;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ComparisonChain;
 import com.hengyi.japp.fund.domain.Balancelike;
 import com.hengyi.japp.fund.domain.Corporation;
@@ -8,14 +9,12 @@ import com.hengyi.japp.fund.domain.Fundlike;
 import com.hengyi.japp.fund.interfaces.xlsx.export.BaseFillData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.jzb.J;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static com.hengyi.japp.fund.interfaces.xlsx.PoiUtil.*;
 
@@ -73,9 +72,6 @@ public class DayFundSheetData extends BaseFillData implements Comparable<DayFund
             rowIndex = weekData.fillData(rowIndex);
         }
 
-        IntStream.rangeClosed(0, 7)
-                .map(it -> it * 2 + 1)
-                .forEach(sheet::autoSizeColumn);
     }
 
     private int fillHeadData() {

@@ -1,5 +1,7 @@
 package com.hengyi.japp.fund.interfaces.fi.internal;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.ee.Jee;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.hengyi.japp.fund.domain.*;
@@ -7,8 +9,6 @@ import com.hengyi.japp.fund.domain.repository.DayFundPlanRepository;
 import com.hengyi.japp.fund.interfaces.fi.domain.Account;
 import com.hengyi.japp.fund.interfaces.fi.domain.AccountBalance;
 import org.apache.commons.lang3.tuple.Triple;
-import org.jzb.J;
-import org.jzb.ee.JEE;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,8 +32,6 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
 
     private final String curSqlTpl = "SELECT * FROM BP_ACCTCURBALANCE WHERE ACCOUNTID=${accountId}";
     private final String hisSqlTpl;
-    private Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> balanceMap;
-    private Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> sumByDayMap;
 
     public QueryFiBalanceTask(Function<String, Stream<Map<String, Object>>> querySqlFun, Map<Object, Account> accountMap, LocalDate ldStart, LocalDate ldEnd) {
         this.querySqlFun = querySqlFun;
@@ -51,27 +49,22 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
                 .map(Account::getCurrency)
                 .collect(Collectors.toSet());
 
-        String sqlTpl = "SELECT * FROM BP_ACCTHISBALANCE WHERE ACCOUNTID=${accountId} AND TO_CHAR(BALANCEDATE,'yyyy-mm-dd')>='${sDate}' AND TO_CHAR(BALANCEDATE,'yyyy-mm-dd')<='${eDate}'";
-        this.hisSqlTpl = J.strTpl(sqlTpl, ImmutableMap.of("sDate", ldStart.toString(), "eDate", ldEnd.toString()));
+        this.hisSqlTpl = "SELECT * FROM BP_ACCTHISBALANCE WHERE ACCOUNTID=${accountId} AND TO_CHAR(BALANCEDATE,'yyyy-mm-dd')>='" + this.ldStart + "' AND TO_CHAR(BALANCEDATE,'yyyy-mm-dd')<='" + this.ldEnd + "'";
     }
 
     @Override
     protected Stream<? extends Balancelike> compute() {
-        SumDayFundPlanTask task = new SumDayFundPlanTask();
-        task.fork();
-        sumByDayMap = task.join();
+        final SumDayFundPlanTask sumDayFundPlanTask = new SumDayFundPlanTask();
+        sumDayFundPlanTask.fork();
 
-        balanceMap = accountMap.values()
+        final Single[] singleTasks = accountMap.values()
                 .stream()
-                .parallel()
                 .map(Single::new)
-                .peek(Single::fork)
+                .toArray(Single[]::new);
+        invokeAll(singleTasks);
+
+        final Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> balanceMap = Stream.of(singleTasks)
                 .flatMap(Single::join)
-//                .filter(accountBalance -> {
-//                    Account account = accountBalance.getAccount();
-//                    Date closeDate = account.getCloseDate();
-//                    return closeDate == null ? true : closeDate.after(accountBalance.getDate());
-//                })
                 .collect(Collectors.toMap(AccountBalance::triple, AccountBalance::getBalance, (a, b) -> a.add(b)));
 
         return Stream.iterate(ldStart, it -> it.plusDays(1))
@@ -81,12 +74,12 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
                         .parallel()
                         .flatMap(corporation -> currencies.stream()
                                 .parallel()
-                                .map(currency -> getBalance(corporation, currency, ld))
+                                .map(currency -> getBalance(corporation, currency, ld, balanceMap, sumDayFundPlanTask.join()))
                         )
                 );
     }
 
-    private FundBalance getBalance(final Corporation corporation, final Currency currency, final LocalDate ld) {
+    private FundBalance getBalance(final Corporation corporation, final Currency currency, final LocalDate ld, Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> balanceMap, Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> sumByDayMap) {
         FundBalance result = new FundBalance();
         result.setCorporation(corporation);
         result.setCurrency(currency);
@@ -121,6 +114,21 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
         return result;
     }
 
+    private class SumDayFundPlanTask extends RecursiveTask<Map<Triple<Corporation, Currency, LocalDate>, BigDecimal>> {
+        @Override
+        protected Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> compute() {
+            // 结束日期大于当天，必将有些天的余额查不到，需要扩充
+            if (ldEnd.isAfter(ldCur)) {
+                // 累计每天的流水总金额，用于计算扩展的余额
+                DayFundPlanRepository dayFundPlanRepository = Jee.getBean(DayFundPlanRepository.class);
+                return dayFundPlanRepository.query(corporations, currencies, ldCur.plusDays(1), ldEnd)
+                        .parallel()
+                        .collect(Collectors.toMap(DayFundPlan::triple, DayFundPlan::getMoney, (a, b) -> a.add(b)));
+            }
+            return Maps.newHashMap();
+        }
+    }
+
     private class Single extends RecursiveTask<Stream<AccountBalance>> {
         private final Account account;
 
@@ -130,6 +138,7 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
 
         @Override
         protected Stream<AccountBalance> compute() {
+            final LocalDate ldCur = LocalDate.now();
             // 查询当前余额
             Stream<AccountBalance> streamCur = ldEnd.isBefore(ldCur) ? Stream.empty() : query(curSqlTpl);
             // 查询历史余额
@@ -143,21 +152,6 @@ public class QueryFiBalanceTask extends RecursiveTask<Stream<? extends Balanceli
             return querySqlFun.apply(sql)
                     .parallel()
                     .map(map -> new AccountBalance(map, accountMap));
-        }
-    }
-
-    private class SumDayFundPlanTask extends RecursiveTask<Map<Triple<Corporation, Currency, LocalDate>, BigDecimal>> {
-        @Override
-        protected Map<Triple<Corporation, Currency, LocalDate>, BigDecimal> compute() {
-            // 结束日期大于当天，必将有些天的余额查不到，需要扩充
-            if (ldEnd.isAfter(ldCur)) {
-                // 累计每天的流水总金额，用于计算扩展的余额
-                DayFundPlanRepository dayFundPlanRepository = JEE.getBean(DayFundPlanRepository.class);
-                return dayFundPlanRepository.query(corporations, currencies, ldCur.plusDays(1), ldEnd)
-                        .parallel()
-                        .collect(Collectors.toMap(DayFundPlan::triple, DayFundPlan::getMoney, (a, b) -> a.add(b)));
-            }
-            return Maps.newHashMap();
         }
     }
 

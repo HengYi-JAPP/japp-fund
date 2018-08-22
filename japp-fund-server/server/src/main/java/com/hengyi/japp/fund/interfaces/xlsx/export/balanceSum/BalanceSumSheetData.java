@@ -1,5 +1,6 @@
 package com.hengyi.japp.fund.interfaces.xlsx.export.balanceSum;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ComparisonChain;
 import com.hengyi.japp.fund.domain.Balancelike;
 import com.hengyi.japp.fund.domain.Corporation;
@@ -7,7 +8,6 @@ import com.hengyi.japp.fund.domain.Currency;
 import com.hengyi.japp.fund.interfaces.xlsx.export.BaseFillData;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.jzb.J;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -53,7 +53,6 @@ public class BalanceSumSheetData extends BaseFillData implements Comparable<Bala
             rowIndex = weekData.fillData(rowIndex);
         }
 
-        sheet.autoSizeColumn(1);
     }
 
     private int fillHeadData() {

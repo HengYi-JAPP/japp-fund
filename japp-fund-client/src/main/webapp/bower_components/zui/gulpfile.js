@@ -33,7 +33,8 @@ extend(true, zui, require('./zui.templates.json'));
 try {
     var zuicustom = require('./zui.custom.json');
     if (zuicustom) extend(true, zui, zuicustom);
-} catch (e) { }
+} catch (e) {
+}
 
 var today = moment();
 var typeSet = ['less', 'js', 'resource'],
@@ -257,7 +258,9 @@ function buildBundle(name, callback, type) {
 
         gulp.task('build:' + name + ':bundles', function (cb) {
             runSequence(bundlesTaskList, function () {
-                console.log(('         √ Build BUNDLES ' + name.toUpperCase() + ' [' + build.bundles.map(function (x) { return x.bold; }).join(', ') + '] success! ').green);
+                console.log(('         √ Build BUNDLES ' + name.toUpperCase() + ' [' + build.bundles.map(function (x) {
+                    return x.bold;
+                }).join(', ') + '] success! ').green);
                 cb();
             });
         });
@@ -284,7 +287,7 @@ function buildBundle(name, callback, type) {
 
     console.log(('           --- build ' + name + ' ---').cyan.bold);
 
-    var banner = formatBanner({ title: build.title || name });
+    var banner = formatBanner({title: build.title || name});
     var source = getBuildSource(build),
         bannerContent = (build.source && build.source !== 'Bootstrap') ?
             '' : banner + (build.bootstrapStatement ? BOOTSTRAP_STATEMENT : '');
@@ -310,7 +313,7 @@ function buildBundle(name, callback, type) {
                     console.log('      js > '.yellow.bold + (destPath + build.filename + '.js').italic.underline);
                 })
                 //.pipe(sourcemaps.init())
-                .pipe(uglify({ preserveComments: 'some' }))
+                .pipe(uglify({preserveComments: 'some'}))
                 .pipe(rename({
                     suffix: '.min'
                 }))
@@ -502,11 +505,11 @@ gulp.task('watch', function (callback) {
 gulp.task('minJSON', function (cb) {
     gulp.src(['./docs/index.json', './docs/icons.json'])
         .pipe(jsonminify())
-        .pipe(rename({ suffix: '.min' }))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./docs/'));
     gulp.src(['zui.json'])
         .pipe(jsonminify())
-        .pipe(rename({ suffix: '.min' }))
+        .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest('./docs/'));
     cb();
 });
