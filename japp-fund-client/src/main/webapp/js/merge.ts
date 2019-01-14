@@ -59,7 +59,7 @@ class MergePage {
             if (currency.id === currencyId) {
                 this.currency = currency;
             }
-            return $('<a href="javascript:">' + currency.name + '</a>').on('click', () => {
+            return $(`<a href="javascript:">${currency.name}</a>`).on('click', () => {
                 if (this.currency.id === currency.id) {
                     return;
                 }
@@ -134,7 +134,7 @@ class MergeWeekData {
     private dayDatas: MergeDayData[];
 
     constructor(private readonly page: MergePage, private readonly dates: any[], private readonly index: number) {
-        this.domId = 'week-' + index;
+        this.domId = `week-${index}`;
     }
 
     get corporationTrs() {
@@ -145,22 +145,23 @@ class MergeWeekData {
 
     fillData() {
         this.dayDatas = this.dates.map(it => new MergeDayData(this.page, it));
+
         const hTrs = [
-            $('<tr id="' + this.domId + '"><th rowspan="2" class="week-index">第' + this.index + '周</th></tr>'),
+            $(`<tr id="${this.domId}"><th rowspan="2" class="week-index">第${this.index}周</th></tr>`),
             $('<tr></tr>'),
             $('<tr><th>日期</th></tr>'),
         ].map(it => it.appendTo(this.page.$table));
         J.WEEK_DAYS.forEach((it, i) => {
-            $('<th class="week-day">' + it + '</th>').appendTo(hTrs[0]);
+            $(`<th class="week-day">${it}</th>`).appendTo(hTrs[0]);
             $('<th>金额</th>').appendTo(hTrs[1]);
             const dayOfMonth = this.dates[i].isSame(this.page.date, 'month') ? this.dates[i].date() + '号' : '';
-            $('<th class="week-day">' + dayOfMonth + '</th>').appendTo(hTrs[2]);
+            $(`<th class="week-day">${dayOfMonth}</th>`).appendTo(hTrs[2]);
         });
 
         this.page.sumTypes.forEach(sumType => {
             if (sumType.corporationIds) {
                 sumType.corporationIds.map(it => this.page.corporationMap[it]).filter(it => it).forEach(corporation => {
-                    const $tr = $('<tr><td>' + corporation.name + '</td></tr>').appendTo(this.page.$table);
+                    const $tr = $(`<tr><td>${corporation.name}</td></tr>`).appendTo(this.page.$table);
                     this.dayDatas.forEach(dayData => {
                         $tr.append(dayData.corporationTd(corporation.id, sumType));
                     });
@@ -170,7 +171,7 @@ class MergeWeekData {
                 });
             }
 
-            const $tr = $('<tr><td>' + sumType.name + '</td></tr>').appendTo(this.page.$table).on('dblclick', () => {
+            const $tr = $(`<tr><td>${sumType.name}</td></tr>`).appendTo(this.page.$table).on('dblclick', () => {
                 this.page.dblclickSumType();
             });
             switch (sumType.type) {
@@ -189,7 +190,7 @@ class MergeWeekData {
             });
         });
 
-        const $tr = $('<tr class="balance_3"><td> 本日余额总计</td></tr>').appendTo(this.page.$table).on('dblclick', () => {
+        const $tr = $('<tr class="balance_3"><td>本日余额总计</td></tr>').appendTo(this.page.$table).on('dblclick', () => {
             this.page.dblclickSumType();
         });
         this.dayDatas.forEach(dayData => {

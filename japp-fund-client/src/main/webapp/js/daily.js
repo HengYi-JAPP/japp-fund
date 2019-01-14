@@ -46,7 +46,7 @@ var DailyPage = /** @class */ (function () {
                 if (corporation.id === corporationId) {
                     _this.corporation = corporation;
                 }
-                return $('<a href="javascript:">' + corporation.name + '</a>').on('click', function () {
+                return $("<a href=\"javascript:\">" + corporation.name + "</a>").on('click', function () {
                     if (_this.corporation.id === corporation.id) {
                         return;
                     }
@@ -83,7 +83,7 @@ var DailyPage = /** @class */ (function () {
                 if (currency.id === currencyId) {
                     _this.currency = currency;
                 }
-                return $('<a href="javascript:">' + currency.name + '</a>').on('click', function () {
+                return $("<a href=\"javascript:\">" + currency.name + "</a>").on('click', function () {
                     if (_this.currency.id === currency.id) {
                         return;
                     }
@@ -164,23 +164,23 @@ var DailyWeekData = /** @class */ (function () {
         this.page = page;
         this.dates = dates;
         this.index = index;
-        this.domId = 'week-' + index;
+        this.domId = "week-" + index;
     }
     DailyWeekData.prototype.fillData = function () {
         var _this = this;
         this.dayDatas = this.dates.map(function (it) { return new DailyDayData(_this.page, it); });
         // 每周的前面3行数据
         var hTrs = [
-            $('<tr id="' + this.domId + '"><th rowspan="2" class="week-index">第' + this.index + '周</th></tr>'),
+            $("<tr id=\"" + this.domId + "\"><th rowspan=\"2\" class=\"week-index\">\u7B2C" + this.index + "\u5468</th></tr>"),
             $('<tr></tr>'),
             $('<tr><th>日期</th></tr>'),
         ].map(function (it) { return it.appendTo(_this.page.$table); });
         J.WEEK_DAYS.forEach(function (it, i) {
-            $('<th colspan="2" class="week-day">' + it + '</th>').appendTo(hTrs[0]);
+            $("<th colspan=\"2\" class=\"week-day\">" + it + "</th>").appendTo(hTrs[0]);
             $('<th>金额</th>').appendTo(hTrs[1]);
             $('<th>简述</th>').appendTo(hTrs[1]);
             var dayOfMonth = _this.dates[i].isSame(_this.page.date, 'month') ? _this.dates[i].date() + '号' : '';
-            $('<th colspan="2" class="week-day">' + dayOfMonth + '</th>').appendTo(hTrs[2]);
+            $("<th colspan=\"2\" class=\"week-day\">" + dayOfMonth + "</th>").appendTo(hTrs[2]);
         });
         var $preBalance = $('<tr class="balance_1"><td>上日余额</td></tr>').appendTo(this.page.$table);
         this.dayDatas.forEach(function (dayData) {
@@ -188,7 +188,7 @@ var DailyWeekData = /** @class */ (function () {
         });
         var outFundsCount = this.dayDatas.reduce(function (acc, cur) { return Math.max(acc, cur.outFundsCount()); }, 0);
         var _loop_1 = function (i) {
-            var $tr = $('<tr><td>支出' + (i + 1) + '</td></tr>').appendTo(this_1.page.$table);
+            var $tr = $("<tr><td>\u652F\u51FA" + (i + 1) + "</td></tr>").appendTo(this_1.page.$table);
             this_1.dayDatas.forEach(function (dayData) {
                 dayData.outFundTds(i).forEach(function (it) { return $tr.append(it); });
             });
@@ -203,7 +203,7 @@ var DailyWeekData = /** @class */ (function () {
         });
         var inFundsCount = this.dayDatas.reduce(function (acc, cur) { return Math.max(acc, cur.inFundsCount()); }, 0);
         var _loop_2 = function (i) {
-            var $tr = $('<tr><td>收入' + (i + 1) + '</td></tr>').appendTo(this_2.page.$table);
+            var $tr = $("<tr><td>\u6536\u5165" + (i + 1) + "</td></tr>").appendTo(this_2.page.$table);
             this_2.dayDatas.forEach(function (dayData) {
                 dayData.inFundTds(i).forEach(function (it) { return $tr.append(it); });
             });
@@ -361,7 +361,7 @@ var BatchFundUpdateModal = /** @class */ (function () {
         }).then(function (monthFundPlans) {
             _this.$monthFundPlanList.empty();
             monthFundPlans.forEach(function (it) {
-                $('<option value="' + it.id + '">' + it.purpose.name + '</option>').appendTo(_this.$monthFundPlanList);
+                $("<option value=\"" + it.id + "\">" + it.purpose.name + "</option>").appendTo(_this.$monthFundPlanList);
             });
             _this.$monthFundPlanList.val(monthFundPlans[0].id);
             _this.$money.val('');
@@ -420,7 +420,7 @@ var FundUpdateModal = /** @class */ (function () {
         }).then(function (monthFundPlans) {
             _this.$monthFundPlanList.empty();
             monthFundPlans.forEach(function (it) {
-                $('<option value="' + it.id + '">' + it.purpose.name + '</option>').appendTo(_this.$monthFundPlanList);
+                $("<option value=\"" + it.id + "\">" + it.purpose.name + "</option>").appendTo(_this.$monthFundPlanList);
             });
             if (orignFund && orignFund.id) {
                 _this.fund = $.extend({}, orignFund);

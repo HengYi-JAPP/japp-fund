@@ -59,7 +59,7 @@ class DailyPage {
                 if (corporation.id === corporationId) {
                     this.corporation = corporation;
                 }
-                return $('<a href="javascript:">' + corporation.name + '</a>').on('click', () => {
+                return $(`<a href="javascript:">${corporation.name}</a>`).on('click', () => {
                     if (this.corporation.id === corporation.id) {
                         return;
                     }
@@ -96,7 +96,7 @@ class DailyPage {
                 if (currency.id === currencyId) {
                     this.currency = currency;
                 }
-                return $('<a href="javascript:">' + currency.name + '</a>').on('click', () => {
+                return $(`<a href="javascript:">${currency.name}</a>`).on('click', () => {
                     if (this.currency.id === currency.id) {
                         return;
                     }
@@ -182,23 +182,23 @@ class DailyWeekData {
     private dayDatas: DailyDayData[];
 
     constructor(private readonly page: DailyPage, private readonly dates: any[], readonly index: number) {
-        this.domId = 'week-' + index;
+        this.domId = `week-${index}`;
     }
 
     fillData() {
         this.dayDatas = this.dates.map(it => new DailyDayData(this.page, it));
         // 每周的前面3行数据
         const hTrs = [
-            $('<tr id="' + this.domId + '"><th rowspan="2" class="week-index">第' + this.index + '周</th></tr>'),
+            $(`<tr id="${this.domId}"><th rowspan="2" class="week-index">第${this.index}周</th></tr>`),
             $('<tr></tr>'),
             $('<tr><th>日期</th></tr>'),
         ].map(it => it.appendTo(this.page.$table));
         J.WEEK_DAYS.forEach((it, i) => {
-            $('<th colspan="2" class="week-day">' + it + '</th>').appendTo(hTrs[0]);
+            $(`<th colspan="2" class="week-day">${it}</th>`).appendTo(hTrs[0]);
             $('<th>金额</th>').appendTo(hTrs[1]);
             $('<th>简述</th>').appendTo(hTrs[1]);
             const dayOfMonth = this.dates[i].isSame(this.page.date, 'month') ? this.dates[i].date() + '号' : '';
-            $('<th colspan="2" class="week-day">' + dayOfMonth + '</th>').appendTo(hTrs[2]);
+            $(`<th colspan="2" class="week-day">${dayOfMonth}</th>`).appendTo(hTrs[2]);
         });
 
         const $preBalance = $('<tr class="balance_1"><td>上日余额</td></tr>').appendTo(this.page.$table);
@@ -207,7 +207,7 @@ class DailyWeekData {
         });
         const outFundsCount = this.dayDatas.reduce((acc, cur) => Math.max(acc, cur.outFundsCount()), 0);
         for (let i = 0; i <= outFundsCount; i++) {
-            const $tr = $('<tr><td>支出' + (i + 1) + '</td></tr>').appendTo(this.page.$table);
+            const $tr = $(`<tr><td>支出${(i + 1)}</td></tr>`).appendTo(this.page.$table);
             this.dayDatas.forEach(dayData => {
                 dayData.outFundTds(i).forEach(it => $tr.append(it));
             });
@@ -219,7 +219,7 @@ class DailyWeekData {
         });
         const inFundsCount = this.dayDatas.reduce((acc, cur) => Math.max(acc, cur.inFundsCount()), 0);
         for (let i = 0; i <= inFundsCount; i++) {
-            const $tr = $('<tr><td>收入' + (i + 1) + '</td></tr>').appendTo(this.page.$table);
+            const $tr = $(`<tr><td>收入${(i + 1)}</td></tr>`).appendTo(this.page.$table);
             this.dayDatas.forEach(dayData => {
                 dayData.inFundTds(i).forEach(it => $tr.append(it));
             });
@@ -390,7 +390,7 @@ class BatchFundUpdateModal {
         }).then(monthFundPlans => {
             this.$monthFundPlanList.empty();
             monthFundPlans.forEach(it => {
-                $('<option value="' + it.id + '">' + it.purpose.name + '</option>').appendTo(this.$monthFundPlanList)
+                $(`<option value="${it.id}">${it.purpose.name}</option>`).appendTo(this.$monthFundPlanList)
             });
             this.$monthFundPlanList.val(monthFundPlans[0].id);
             this.$money.val('');
@@ -450,7 +450,7 @@ class FundUpdateModal {
         }).then(monthFundPlans => {
             this.$monthFundPlanList.empty();
             monthFundPlans.forEach(it => {
-                $('<option value="' + it.id + '">' + it.purpose.name + '</option>').appendTo(this.$monthFundPlanList)
+                $(`<option value="${it.id}">${it.purpose.name}</option>`).appendTo(this.$monthFundPlanList)
             });
 
             if (orignFund && orignFund.id) {

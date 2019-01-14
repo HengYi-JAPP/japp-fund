@@ -46,7 +46,7 @@ var MergePage = /** @class */ (function () {
             if (currency.id === currencyId) {
                 _this.currency = currency;
             }
-            return $('<a href="javascript:">' + currency.name + '</a>').on('click', function () {
+            return $("<a href=\"javascript:\">" + currency.name + "</a>").on('click', function () {
                 if (_this.currency.id === currency.id) {
                     return;
                 }
@@ -115,7 +115,7 @@ var MergeWeekData = /** @class */ (function () {
         this.index = index;
         //双击小计，隐藏公司项
         this.corporationTrsMap = {};
-        this.domId = 'week-' + index;
+        this.domId = "week-" + index;
     }
     Object.defineProperty(MergeWeekData.prototype, "corporationTrs", {
         get: function () {
@@ -131,20 +131,20 @@ var MergeWeekData = /** @class */ (function () {
         var _this = this;
         this.dayDatas = this.dates.map(function (it) { return new MergeDayData(_this.page, it); });
         var hTrs = [
-            $('<tr id="' + this.domId + '"><th rowspan="2" class="week-index">第' + this.index + '周</th></tr>'),
+            $("<tr id=\"" + this.domId + "\"><th rowspan=\"2\" class=\"week-index\">\u7B2C" + this.index + "\u5468</th></tr>"),
             $('<tr></tr>'),
             $('<tr><th>日期</th></tr>'),
         ].map(function (it) { return it.appendTo(_this.page.$table); });
         J.WEEK_DAYS.forEach(function (it, i) {
-            $('<th class="week-day">' + it + '</th>').appendTo(hTrs[0]);
+            $("<th class=\"week-day\">" + it + "</th>").appendTo(hTrs[0]);
             $('<th>金额</th>').appendTo(hTrs[1]);
             var dayOfMonth = _this.dates[i].isSame(_this.page.date, 'month') ? _this.dates[i].date() + '号' : '';
-            $('<th class="week-day">' + dayOfMonth + '</th>').appendTo(hTrs[2]);
+            $("<th class=\"week-day\">" + dayOfMonth + "</th>").appendTo(hTrs[2]);
         });
         this.page.sumTypes.forEach(function (sumType) {
             if (sumType.corporationIds) {
                 sumType.corporationIds.map(function (it) { return _this.page.corporationMap[it]; }).filter(function (it) { return it; }).forEach(function (corporation) {
-                    var $tr = $('<tr><td>' + corporation.name + '</td></tr>').appendTo(_this.page.$table);
+                    var $tr = $("<tr><td>" + corporation.name + "</td></tr>").appendTo(_this.page.$table);
                     _this.dayDatas.forEach(function (dayData) {
                         $tr.append(dayData.corporationTd(corporation.id, sumType));
                     });
@@ -153,7 +153,7 @@ var MergeWeekData = /** @class */ (function () {
                     _this.corporationTrsMap[sumType.type] = corporationTrs;
                 });
             }
-            var $tr = $('<tr><td>' + sumType.name + '</td></tr>').appendTo(_this.page.$table).on('dblclick', function () {
+            var $tr = $("<tr><td>" + sumType.name + "</td></tr>").appendTo(_this.page.$table).on('dblclick', function () {
                 _this.page.dblclickSumType();
             });
             switch (sumType.type) {
@@ -171,7 +171,7 @@ var MergeWeekData = /** @class */ (function () {
                 $tr.append(dayData.sumTypeTd(sumType));
             });
         });
-        var $tr = $('<tr class="balance_3"><td> 本日余额总计</td></tr>').appendTo(this.page.$table).on('dblclick', function () {
+        var $tr = $('<tr class="balance_3"><td>本日余额总计</td></tr>').appendTo(this.page.$table).on('dblclick', function () {
             _this.page.dblclickSumType();
         });
         this.dayDatas.forEach(function (dayData) {
