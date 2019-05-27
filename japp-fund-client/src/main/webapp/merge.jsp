@@ -1,7 +1,7 @@
+<%@ page import="com.github.ixtf.japp.core.J" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="java.util.Optional" %>
-<%@ page import="org.jzb.J" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String currencyId = Optional.ofNullable(request.getParameter("currencyId"))

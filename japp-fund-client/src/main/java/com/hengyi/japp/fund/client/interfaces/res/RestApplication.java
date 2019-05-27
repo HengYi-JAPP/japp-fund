@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,8 +36,8 @@ public class RestApplication extends Application {
                     .distinct()
                     .map(clazz -> {
                         try {
-                            return clazz.newInstance();
-                        } catch (InstantiationException | IllegalAccessException e) {
+                            return clazz.getDeclaredConstructor().newInstance();
+                        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                             throw new RuntimeException(e);
                         }
                     })

@@ -1,9 +1,9 @@
 package com.hengyi.japp.fund.client.interfaces.res.resources;
 
 import com.hengyi.japp.fund.client.Api;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;

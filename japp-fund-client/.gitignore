@@ -40,3 +40,4 @@ gradle-app.setting
 .idea/
 .vertx/
 docker-command.txt
+node_modules/

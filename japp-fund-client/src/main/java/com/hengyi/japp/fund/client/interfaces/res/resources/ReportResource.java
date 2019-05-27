@@ -1,7 +1,6 @@
 package com.hengyi.japp.fund.client.interfaces.res.resources;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -21,9 +20,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.github.ixtf.japp.core.Constant.MAPPER;
 import static com.hengyi.japp.fund.client.Api.Urls.REPORTS_SUM_BALANCES_CONFIG;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static org.jzb.Constant.MAPPER;
 
 @Path("reports")
 @Consumes(APPLICATION_JSON)

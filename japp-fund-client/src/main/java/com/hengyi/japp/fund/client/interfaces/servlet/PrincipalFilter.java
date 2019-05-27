@@ -1,12 +1,12 @@
 package com.hengyi.japp.fund.client.interfaces.servlet;
 
+import com.github.ixtf.japp.core.J;
+import com.github.ixtf.japp.core.exception.JAuthenticationError;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.sun.security.auth.UserPrincipal;
 import org.jasig.cas.client.util.AssertionHolder;
 import org.jasig.cas.client.validation.Assertion;
-import org.jzb.J;
-import org.jzb.exception.JNonAuthenticationError;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +46,7 @@ public class PrincipalFilter implements Filter {
                     }
                 } catch (Exception e) {
                 }
-                throw new JNonAuthenticationError();
+                throw new JAuthenticationError();
             }
         }, response);
     }

@@ -1,7 +1,8 @@
 package com.hengyi.japp.fund.client;
 
+import com.github.ixtf.japp.codec.Jcodec;
+import com.github.ixtf.japp.core.J;
 import okhttp3.*;
-import org.jzb.J;
 
 import javax.ws.rs.core.StreamingOutput;
 import java.io.InputStream;
@@ -64,7 +65,7 @@ public class Api {
             }
             try (ResponseBody body = response.body();
                  InputStream is = body.byteStream()) {
-                Path path = Paths.get(TMP_PATH, J.uuid58() + ".xlsx");
+                Path path = Paths.get(TMP_PATH, Jcodec.uuid58() + ".xlsx");
                 Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
                 return (out) -> Files.copy(path, out);
             }

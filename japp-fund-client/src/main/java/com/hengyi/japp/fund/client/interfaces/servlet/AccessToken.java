@@ -1,11 +1,11 @@
 package com.hengyi.japp.fund.client.interfaces.servlet;
 
+import com.github.ixtf.japp.core.J;
 import com.google.common.collect.ImmutableMap;
 import com.hengyi.japp.fund.client.Api;
 import okhttp3.Request;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.validation.Assertion;
-import org.jzb.J;
 
 public class AccessToken {
     private final String casId;
